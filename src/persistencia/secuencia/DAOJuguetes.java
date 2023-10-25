@@ -8,32 +8,31 @@ public class DAOJuguetes {
     private int cedulaNiño;
 
     public boolean isback(Juguete juguete) {
-        // Implementar lógica
+        // Implementar
         return false;
     }
 
     public void insert(Juguete juguete) {
-        // Implementar lógica
+        // Implementar
     }
 
     public int largo() {
-        // Implementar lógica
+        // Implementar
         return 0;
     }
 
     public Juguete k_esimo(int numero) {
-        // Implementar lógica
+        // Implementar
         return null;
     }
 
     public List<Juguete> listarJuguetes() {
-        // Implementar lógica
+        // Implementar
         return null;
     }
 
     public void borrarJuguetes() {
-        // Implementar lógica
+        // Implementar
     }
 
-	
 }
