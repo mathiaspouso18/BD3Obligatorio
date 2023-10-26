@@ -7,7 +7,11 @@ import logica.Juguete;
 public class DAOJuguetes {
     private int cedulaNiño;
 
-    public boolean isback(Juguete juguete) {
+    public DAOJuguetes(int cedula) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public boolean isback(Juguete juguete) {
         // Implementar
         return false;
     }

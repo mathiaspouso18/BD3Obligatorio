@@ -14,6 +14,7 @@ public class Niño {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.secuencia = new DAOJuguetes(cedula);
     }
 
     public int getCedula() {
