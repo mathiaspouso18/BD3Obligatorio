@@ -1,4 +1,4 @@
-package persistencia.diccionario;
+package persistencia.daos;
 
 import java.util.List;
 

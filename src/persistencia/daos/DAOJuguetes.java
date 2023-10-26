@@ -1,4 +1,4 @@
-package persistencia.secuencia;
+package persistencia.daos;
 
 import java.util.List;
 
