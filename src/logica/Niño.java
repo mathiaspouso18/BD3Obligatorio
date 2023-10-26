@@ -2,7 +2,7 @@ package logica;
 
 import java.util.List;
 
-import persistencia.secuencia.DAOJuguetes;
+import persistencia.daos.DAOJuguetes;
 
 public class Niño {
     private int cedula;
