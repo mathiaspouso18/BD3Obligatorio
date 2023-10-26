@@ -29,25 +29,25 @@ public class Niño {
     }
 
     public boolean tieneJuguete(int numero) {
-        // Implementar lógica
+       
         return false;
     }
 
     public void addJuguete(Juguete juguete) {
-        // Implementar lógica
+        
     }
 
     public Juguete obtenerJuguete(int num) {
-        // Implementar lógica
+       
         return null;
     }
 
     public List<Juguete> listarJuguetes() {
-        // Implementar lógica
+        
         return null;
     }
 
     public void borrarJuguetes() {
-        // Implementar lógica
+        
     }
 }
