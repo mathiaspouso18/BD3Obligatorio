@@ -1,6 +1,6 @@
 package logica.excepciones;
 
-public class PersistenciaException {
+public class PersistenciaException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private int codigoError;
 
@@ -16,16 +16,15 @@ public class PersistenciaException {
 			mensaje = "Error al generar la conexión";
 			break;
 		case 2:
-			mensaje = "Error al recuperar el archivo";
+			mensaje = "Error al cerrar la conexión";
 			break;
 		case 3:
-			mensaje  = "El archivo no existe en disco";
+			mensaje = "Error al ejecutando la sentencia";
 			break;
 		default:
 			mensaje = "Error no especificado";
 		}
 
 		return mensaje;
-
 	}
 }

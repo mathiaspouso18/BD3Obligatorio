@@ -1,33 +1,86 @@
 package persistencia.daos;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import logica.Juguete;
+import logica.excepciones.PersistenciaException;
+import persistencia.consultas.consultas;
 
 public class DAOJuguetes {
-    private int cedulaNiño;
-
-    public DAOJuguetes(int cedula) {
-		// TODO Auto-generated constructor stub
-	}
-
-	public boolean isback(Juguete juguete) {
-        // Implementar
-        return false;
+    private int cédulaNiño;
+    private String url = "jdbc:mysql://localhost:3306/";
+    private String user = "root";
+    private String password = "root";
+    Connection con;
+    
+    // TODO(CONSTRUCTOR)
+    
+    private void crearCon() throws PersistenciaException {
+        try {
+        	con = DriverManager.getConnection(url, user, password);
+		} catch (SQLException e) {
+			throw new PersistenciaException(1);
+		}
+    }
+    
+    private void cerrarCon() throws PersistenciaException {
+    	try {
+			con.close();
+		} catch (SQLException e) {
+			throw new PersistenciaException(4);
+		}
     }
 
-    public void insert(Juguete juguete) {
-        // Implementar
+    public void insback(Juguete juguete) throws PersistenciaException {
+        try {
+        	crearCon();
+			PreparedStatement statement = con.prepareStatement(consultas.nuevoJuguete());
+			statement.setInt(1, juguete.getNumero());
+			statement.setString(2, juguete.getDescripcion());
+			statement.setInt(3, this.cédulaNiño);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PersistenciaException(3);
+		} finally {
+			cerrarCon();
+		}
     }
 
-    public int largo() {
-        // Implementar
-        return 0;
+    public int largo() throws PersistenciaException {
+        try {
+        	crearCon();
+			PreparedStatement statement = con.prepareStatement(consultas.cantidadDeJuguetes());
+			statement.setInt(1, this.cédulaNiño);
+			ResultSet response = statement.executeQuery();
+			return response.getInt("cantidad");
+		} catch (SQLException e) {
+			throw new PersistenciaException(3);
+		} finally {
+			cerrarCon();
+		}
     }
 
-    public Juguete k_esimo(int numero) {
-        // Implementar
-        return null;
+    public Juguete k_esimo(int k) throws PersistenciaException {
+        try {
+        	crearCon();
+			PreparedStatement statement = con.prepareStatement(consultas.k_esimoJuguete());
+			statement.setInt(1, this.cédulaNiño);
+			statement.setInt(2, k);
+			ResultSet response = statement.executeQuery();
+			return new Juguete(response.getInt("numero"), response.getString("descripcion"));
+		} catch (SQLException e) {
+			throw new PersistenciaException(3);
+		} finally {
+			cerrarCon();
+		}
     }
 
     public List<Juguete> listarJuguetes() {
@@ -38,5 +91,4 @@ public class DAOJuguetes {
     public void borrarJuguetes() {
         // Implementar
     }
-
 }
