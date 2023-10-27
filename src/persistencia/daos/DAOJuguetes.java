@@ -21,7 +21,9 @@ public class DAOJuguetes {
     private String password = "root";
     Connection con;
     
-    // TODO(CONSTRUCTOR)
+    public DAOJuguetes(int cedula) {
+    	this.cédulaNiño = cedula;
+	}
     
     private void crearCon() throws PersistenciaException {
         try {
