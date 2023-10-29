@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import grafica.controladores.ControladorAltaNinio;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -35,6 +38,7 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtDescripcion;
+	VentanaPrincipal vista;
 
 	/**
 	 * Launch the application.
@@ -54,14 +58,18 @@ public class VentanaPrincipal extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public VentanaPrincipal() {
+	public VentanaPrincipal() throws Exception {
+		setResizable(false);
 		setAlwaysOnTop(true);
 		setTitle("Guardería");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 971, 441);
+		setBounds(100, 100, 921, 441);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
+		
+		ControladorAltaNinio can = new ControladorAltaNinio(vista);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
