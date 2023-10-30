@@ -1,6 +1,6 @@
 package logica.excepciones;
 
-public class NiñosException {
+public class NiñosException extends Exception {
 	private int codigoError;
 
 	public NiñosException(int cod) {
@@ -18,7 +18,7 @@ public class NiñosException {
 			mensaje = "El niño no existe";
 			break;
 		case 3:
-			mensaje  = "";
+			mensaje  = "No hay niños en la lista";
 			break;
 		default:
 			mensaje = "Error no especificado";
