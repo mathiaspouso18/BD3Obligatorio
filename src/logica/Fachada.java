@@ -9,7 +9,7 @@ import logica.valueObjects.VONiño;
 import persistencia.daos.DAOJuguetes;
 import persistencia.daos.DAONiños;
 
-public class Fachada {
+public class Fachada implements IFachada {
 	private DAOJuguetes diccioJuguetes;
 	private DAONiños diccioNiños;
 	
