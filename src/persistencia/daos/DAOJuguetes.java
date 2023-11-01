@@ -23,7 +23,7 @@ public class DAOJuguetes {
     
     public DAOJuguetes(int cedula) {
     	this.cédulaNiño = cedula;
-	}
+    }
     
     private void crearCon() throws PersistenciaException {
         try {
@@ -37,14 +37,14 @@ public class DAOJuguetes {
     	try {
 			con.close();
 		} catch (SQLException e) {
-			throw new PersistenciaException(4);
+			throw new PersistenciaException(2);
 		}
     }
 
     public void insback(Juguete juguete) throws PersistenciaException {
         try {
         	crearCon();
-			PreparedStatement statement = con.prepareStatement(consultas.nuevoJuguete());
+			PreparedStatement statement = con.prepareStatement(consultas.insertarJuguete());
 			statement.setInt(1, juguete.getNumero());
 			statement.setString(2, juguete.getDescripcion());
 			statement.setInt(3, this.cédulaNiño);
