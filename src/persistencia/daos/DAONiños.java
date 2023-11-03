@@ -11,13 +11,19 @@ import java.util.List;
 import logica.Juguete;
 import logica.Niño;
 import logica.excepciones.PersistenciaException;
+import logica.valueObjects.VONiño;
 import persistencia.consultas.consultas;
 
 public class DAONiños {
-    private String url = "jdbc:mysql://localhost:3306/";
+    private String url = "jdbc:mysql://localhost:3306/guarderia";
     private String user = "root";
     private String password = "root";
     Connection con;
+    ArrayList<Niño> secuencia;
+    
+    public DAONiños() {
+    	secuencia = new ArrayList<Niño>();
+    }
     
     private void crearCon() throws PersistenciaException {
         try {
@@ -91,14 +97,14 @@ public class DAONiños {
 		}
     }
 
-    public List<Niño> listarNiños() throws PersistenciaException {
+    public List<VONiño> listarNiños() throws PersistenciaException {
         try {
         	crearCon();
-        	List<Niño> lista = new ArrayList<Niño>();
+        	List<VONiño> lista = new ArrayList<VONiño>();
 			PreparedStatement statement = con.prepareStatement(consultas.listarNiños());
 			ResultSet response = statement.executeQuery();
 			while(response.next()) {				
-				lista.add(new Niño(response.getInt("cedula"), response.getString("nombre"), response.getString("apellido")));
+				lista.add(new VONiño(response.getInt("cedula"), response.getString("nombre"), response.getString("apellido")));
 			}
 			return lista;
 		} catch (SQLException e) {

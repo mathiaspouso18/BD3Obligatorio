@@ -2,6 +2,8 @@ package logica;
 
 import java.util.List;
 
+import logica.excepciones.PersistenciaException;
+import logica.valueObjects.VOJuguete;
 import persistencia.daos.DAOJuguetes;
 
 public class Niño {
@@ -30,22 +32,21 @@ public class Niño {
     }
 
     public boolean tieneJuguete(int numero) {
+    	return false;
+    }
+
+    public void addJuguete(Juguete juguete) throws PersistenciaException {
+        this.secuencia.insback(juguete);
+    }
+
+    public Juguete obtenerJuguete(int num) throws PersistenciaException {
        
-        return false;
+        return this.secuencia.k_esimo(num);
     }
 
-    public void addJuguete(Juguete juguete) {
+    public List<VOJuguete> listarJuguetes() throws PersistenciaException {
         
-    }
-
-    public Juguete obtenerJuguete(int num) {
-       
-        return null;
-    }
-
-    public List<Juguete> listarJuguetes() {
-        
-        return null;
+        return this.secuencia.listarJuguetes();
     }
 
     public void borrarJuguetes() {

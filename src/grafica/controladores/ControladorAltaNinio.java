@@ -1,25 +1,25 @@
 package grafica.controladores;
-
-import java.io.FileInputStream;
-import java.rmi.Naming;
-import java.util.Properties;
-
 import grafica.ventanas.VentanaPrincipal;
+import logica.Fachada;
+import logica.excepciones.NiñosException;
+import logica.valueObjects.VONiño;
 
 public class ControladorAltaNinio{
+	private Fachada cap;
 	public ControladorAltaNinio(VentanaPrincipal vp) throws Exception {
-		
-		//Properties p = new Properties();
-		//String nomArch = "src/config/config.properties";
-		//p.load (new FileInputStream (nomArch));
-		//String ip = p.getProperty("ipServidor");
-		//String puerto = p.getProperty("puertoServidor");
-		//String ruta = "//" + ip + ":" + puerto + "/fachada";
-		
-		//cap = (ICapaLogica) Naming.lookup(ruta);
+		cap = new Fachada();
 	}
 	
-	public void AltaNinio(int _cedula, String _nombre, String _apellido) {
+	public void AltaNinio(int _cedula, String _nombre, String _apellido) throws Exception {
 		
+		VONiño _von;
+		_von = new VONiño(_cedula,_nombre,_apellido);
+		
+		try {
+			cap.AltaNiño(_von);
+		}
+		catch(NiñosException ve) {
+			throw ve;
+		}
 	}
 }
