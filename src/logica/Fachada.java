@@ -92,6 +92,8 @@ public class Fachada implements IFachada {
 		ArrayList<VOJuguete> listJuguetes = new ArrayList<VOJuguete>();
 		
 		try {
+			Niño n = daoNiños.find(_ced);
+			List<VOJuguete> juguetes = n.listarJuguetes();
 			//List<Juguete> lsta = diccioJuguetes.listarJuguetes();
 			//listJuguetes = new ArrayList<>();
 

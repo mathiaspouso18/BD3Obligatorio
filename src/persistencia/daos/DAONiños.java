@@ -19,10 +19,8 @@ public class DAONiños {
     private String user = "root";
     private String password = "root";
     Connection con;
-    ArrayList<Niño> secuencia;
     
     public DAONiños() {
-    	secuencia = new ArrayList<Niño>();
     }
     
     private void crearCon() throws PersistenciaException {
