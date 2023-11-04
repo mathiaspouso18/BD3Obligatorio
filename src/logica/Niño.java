@@ -31,22 +31,20 @@ public class Niño {
         return apellido;
     }
 
-    public boolean tieneJuguete(int numero) {
-    	return false;
+    public boolean tieneJuguete(int numero) throws PersistenciaException {
+    	return secuencia.largo() > 0;
     }
 
     public void addJuguete(Juguete juguete) throws PersistenciaException {
-        this.secuencia.insback(juguete);
+        secuencia.insback(juguete);
     }
 
     public Juguete obtenerJuguete(int num) throws PersistenciaException {
-       
-        return this.secuencia.k_esimo(num);
+    	return secuencia.k_esimo(num);
     }
 
     public List<VOJuguete> listarJuguetes() throws PersistenciaException {
-        
-        return this.secuencia.listarJuguetes();
+    	return secuencia.listarJuguetes();
     }
 
     public void borrarJuguetes() {

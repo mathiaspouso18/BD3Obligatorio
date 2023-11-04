@@ -55,6 +55,4 @@ public class consultas {
 	public static String k_esimoJuguete() {
 		return "SELECT * FROM Juguetes WHERE cedulaNinio = ? AND numero = ?";
 	}
-	
-	
 }

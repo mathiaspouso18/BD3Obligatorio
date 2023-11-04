@@ -8,6 +8,7 @@ import logica.valueObjects.VOJuguete;
 
 public class ControladorListadoJuguetes{
 	private Fachada cap;
+	
 	public ControladorListadoJuguetes(VentanaPrincipal vp) throws Exception {
 		cap = new Fachada();
 	}
@@ -25,11 +26,9 @@ public class ControladorListadoJuguetes{
 				data[1] = descripcion;
 				array.add(data);
 			}	
-		}catch(Exception ve) {
+		} catch(Exception ve) {
 			throw ve;
 		}
-		
 		return array;
-		
 	}
 }

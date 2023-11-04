@@ -7,10 +7,9 @@ import logica.Fachada;
 import logica.valueObjects.VONiño;
 
 public class ControladorListadoNinios{
-
 	private Fachada cap;
+	
 	public ControladorListadoNinios(VentanaPrincipal vp) throws Exception {
-		
 		cap = new Fachada();
 	}
 	
@@ -29,11 +28,9 @@ public class ControladorListadoNinios{
 				data[2] = apellido;
 				array.add(data);
 			}	
-		}catch(Exception ve) {
+		} catch(Exception ve) {
 			throw ve;
 		}
-		
 		return array;
-		
 	}
 }
