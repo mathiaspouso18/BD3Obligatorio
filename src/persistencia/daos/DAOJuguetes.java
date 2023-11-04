@@ -23,11 +23,9 @@ public class DAOJuguetes {
     private String user = "root";
     private String password = "root";
     Connection con;
-    public ArrayList<Juguete> secuencia;
     
     public DAOJuguetes(int cedula) {
     	this.cedulaNiño = cedula;
-    	this.secuencia = new ArrayList<Juguete>();
     }
     
     private void crearCon() throws PersistenciaException {
@@ -108,7 +106,16 @@ public class DAOJuguetes {
  		}
     }
 
-    public void borrarJuguetes() {
-        // Implementar
+    public void borrarJuguetes() throws PersistenciaException {
+        try {
+        	crearCon();
+			PreparedStatement statement = con.prepareStatement(consultas.borrarJuguetes());
+			statement.setInt(1, this.cedulaNiño);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			throw new PersistenciaException(3);
+		} finally {
+			cerrarCon();
+		}
     }
 }
