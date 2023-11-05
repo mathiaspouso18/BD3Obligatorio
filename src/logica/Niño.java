@@ -1,7 +1,6 @@
 package logica;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;

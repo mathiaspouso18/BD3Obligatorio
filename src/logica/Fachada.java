@@ -1,5 +1,6 @@
 package logica;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,11 +10,19 @@ import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 import logica.valueObjects.VONiño;
-import persistencia.daos.DAOJuguetes;
 import persistencia.daos.DAONiños;
 
 public class Fachada implements IFachada {
 	private DAONiños daoNiños;
+	
+	private static Fachada instance = null;
+	
+	public static Fachada getInstance() throws ClassNotFoundException, IOException, PersistenciaException {
+		if (instance == null) {
+			instance = new Fachada();
+		}
+		return instance;
+	}
 	
 	public Fachada() {
 		daoNiños = new DAONiños();

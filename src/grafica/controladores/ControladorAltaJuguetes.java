@@ -5,17 +5,22 @@ import java.rmi.Naming;
 import java.util.Properties;
 
 import grafica.ventanas.VentanaPrincipal;
-import logica.Fachada;
+import logica.IFachada;
 import logica.excepciones.JuguetesException;
-import logica.excepciones.NiñosException;
 import logica.valueObjects.VOJuguete;
-import logica.valueObjects.VONiño;
 
 public class ControladorAltaJuguetes{
-	private Fachada cap;
+	private IFachada cap;
 	
 	public ControladorAltaJuguetes(VentanaPrincipal vp) throws Exception {
-		cap = new Fachada();
+		Properties p = new Properties();
+		String nomArch = "src/config/config.properties";
+		p.load (new FileInputStream (nomArch));
+		String ip = p.getProperty("ipServidor");
+		String puerto = p.getProperty("puertoServidor");
+		String ruta = "//" + ip + ":" + puerto + "/fachada";
+				
+		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
 	public void AltaJuguete(int _cedula, String _descripcion) throws JuguetesException, Exception {

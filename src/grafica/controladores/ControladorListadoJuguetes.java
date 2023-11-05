@@ -1,19 +1,32 @@
 package grafica.controladores;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import grafica.ventanas.VentanaPrincipal;
-import logica.Fachada;
+import logica.IFachada;
 import logica.excepciones.JuguetesException;
 import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 
 public class ControladorListadoJuguetes{
-	private Fachada cap;
+	private IFachada cap;
 	
-	public ControladorListadoJuguetes(VentanaPrincipal vp) throws JuguetesException {
-		cap = new Fachada();
+	public ControladorListadoJuguetes(VentanaPrincipal vp) throws JuguetesException, FileNotFoundException, IOException, NotBoundException {
+		Properties p = new Properties();
+		String nomArch = "src/config/config.properties";
+		p.load (new FileInputStream (nomArch));
+		String ip = p.getProperty("ipServidor");
+		String puerto = p.getProperty("puertoServidor");
+		String ruta = "//" + ip + ":" + puerto + "/fachada";
+				
+		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
 	public ArrayList<String []> ListadoJuguetes(int _cedula) throws JuguetesException, NiñosException, PersistenciaException {
