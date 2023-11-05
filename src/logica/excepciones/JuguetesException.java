@@ -1,13 +1,13 @@
 package logica.excepciones;
 
-public class JuguetesException {
+public class JuguetesException extends Exception {
 	private int codigoError;
 
 	public JuguetesException(int cod) {
 		codigoError = cod;
 	}
 
-	public String getMensajePersistenciaExcep() {
+	public String getMensajeJuguetesExcep() {
 		String mensaje = "";
 
 		switch (codigoError) {

@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import grafica.ventanas.VentanaPrincipal;
 import logica.Fachada;
+import logica.excepciones.JuguetesException;
 import logica.excepciones.NiñosException;
 import logica.valueObjects.VOJuguete;
 import logica.valueObjects.VONiño;
@@ -17,8 +18,13 @@ public class ControladorAltaJuguetes{
 		cap = new Fachada();
 	}
 	
-	public void AltaJuguete(int _cedula, String _descripcion) {
+	public void AltaJuguete(int _cedula, String _descripcion) throws JuguetesException, Exception {
 		VOJuguete _voj;
-		_voj = new VOJuguete(_cedula, _descripcion, 0);
+		_voj = new VOJuguete(_cedula, _descripcion, _cedula);
+		try {
+			cap.AltaJuguete(_voj);
+		} catch(JuguetesException je) {
+			throw je;
+		}
 	}
 }

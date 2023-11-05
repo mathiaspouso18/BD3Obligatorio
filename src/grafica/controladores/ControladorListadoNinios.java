@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import grafica.ventanas.VentanaPrincipal;
 import logica.Fachada;
+import logica.excepciones.NiñosException;
+import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 
 public class ControladorListadoNinios{
@@ -13,7 +15,7 @@ public class ControladorListadoNinios{
 		cap = new Fachada();
 	}
 	
-	public ArrayList<String []> ListadoNinios() throws Exception {
+	public ArrayList<String []> ListadoNinios() throws NiñosException, PersistenciaException {
 		ArrayList<String []> array = new ArrayList<String []>();
 		try {
 			ArrayList<VONiño> arr = cap.ListarNiños();
@@ -28,8 +30,8 @@ public class ControladorListadoNinios{
 				data[2] = apellido;
 				array.add(data);
 			}	
-		} catch(Exception ve) {
-			throw ve;
+		} catch(NiñosException ne) {
+			throw ne;
 		}
 		return array;
 	}

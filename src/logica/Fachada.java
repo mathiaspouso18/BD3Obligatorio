@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import logica.excepciones.JuguetesException;
 import logica.excepciones.NiñosException;
+import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 import logica.valueObjects.VONiño;
 import persistencia.daos.DAOJuguetes;
@@ -17,105 +19,88 @@ public class Fachada implements IFachada {
 		daoNiños = new DAONiños();
 	}
 	
-	public void AltaNiño(VONiño niño) throws Exception {
+	public void AltaNiño(VONiño niño) throws PersistenciaException, NiñosException {
 		int _cedula =  niño.getCedula();
-		
-		try {
-			if(!daoNiños.member(_cedula)) {
-				String nom = niño.getNombre();
-				String ape = niño.getApellido();
-				
-				Niño n = new Niño(_cedula, nom, ape);
-				daoNiños.insert(n);
-			}
-			else {
-				throw new NiñosException(1);
-			}
-		}
-		catch(Exception e) {
-			throw new Exception(e);
-		}
-	}	
 	
-	public void AltaJuguete(VOJuguete juguete) throws Exception {
-		try {
+		if(!daoNiños.member(_cedula)) {
+			String nom = niño.getNombre();
+			String ape = niño.getApellido();
+			
+			Niño n = new Niño(_cedula, nom, ape);
+			daoNiños.insert(n);
 		}
-		catch(Exception e) {
-			throw new Exception(e);
+		else {
+			throw new NiñosException(1);
+		}
+	}
+	
+	public void AltaJuguete(VOJuguete juguete) throws NiñosException, PersistenciaException, JuguetesException {
+		
+		int _ced = juguete.getCedulaNinio();
+		int _ultimoJuguete = 0;
+		String _descripcion = juguete.getDescripcion();
+		
+		if(daoNiños.member(_ced)) {
+			Niño n = daoNiños.find(_ced);
+			
+			List<VOJuguete> juguetes = n.listarJuguetes();
+			_ultimoJuguete = juguetes.size() + 1;
+			
+			Juguete jug = new Juguete(_ultimoJuguete, _descripcion);
+			
+			n.addJuguete(jug);
+		}
+		else {
+			throw new NiñosException(2);
 		}
 	}	
 	
 	public void BajaNiño(VONiño niño) throws Exception {
 		int _cedula =  niño.getCedula();
 		
-		try {
-			if(daoNiños.member(_cedula)) {
-				daoNiños.delete(_cedula);
-			}
-			else {
-				throw new NiñosException(2);
-			}
+		if(daoNiños.member(_cedula)) {
+			daoNiños.delete(_cedula);
 		}
-		catch(Exception e) {
-			throw new Exception(e);
+		else {
+			throw new NiñosException(2);
 		}
 	}
 	
-	public ArrayList<VONiño> ListarNiños() throws Exception {
-		ArrayList<VONiño> listNiños;
+	public ArrayList<VONiño> ListarNiños() throws NiñosException, PersistenciaException {
+	ArrayList<VONiño> listNiños;
+	
+		List<VONiño> lsta = daoNiños.listarNiños();
+		listNiños = new ArrayList<>();
+
+		if(!lsta.isEmpty()) {
+			Iterator<VONiño> iterador = lsta.iterator();
+
+			while(iterador.hasNext()) {
+				VONiño n = iterador.next();
+				VONiño von = new VONiño(n.getCedula(), n.getNombre(), n.getApellido());
+				listNiños.add(von);
+			}
+		}
+		else {
+			throw new NiñosException(3);
+		}
 		
-		try {
-			List<VONiño> lsta = daoNiños.listarNiños();
-			listNiños = new ArrayList<>();
-
-			if(!lsta.isEmpty()) {
-				Iterator<VONiño> iterador = lsta.iterator();
-
-				while(iterador.hasNext()) {
-					VONiño n = iterador.next();
-					VONiño von = new VONiño(n.getCedula(), n.getNombre(), n.getApellido());
-					listNiños.add(von);
-				}
-			}
-			else {
-				throw new NiñosException(3);
-			}
-			
-			return listNiños;
-		}
-		catch(Exception e) {
-			throw new Exception(e);
-		}
+		return listNiños;
 	}
 	
-	public ArrayList<VOJuguete> ListarJuguetes(int _ced) throws Exception {
-		ArrayList<VOJuguete> listJuguetes = new ArrayList<VOJuguete>();
+	public ArrayList<VOJuguete> ListarJuguetes(int _ced) throws NiñosException, PersistenciaException, JuguetesException {
+		ArrayList<VOJuguete> listJuguetes = null;
 		
-		try {
+		if(daoNiños.member(_ced)) {
 			Niño n = daoNiños.find(_ced);
-			List<VOJuguete> juguetes = n.listarJuguetes();
-			//List<Juguete> lsta = diccioJuguetes.listarJuguetes();
-			//listJuguetes = new ArrayList<>();
-
-			//if(!lsta.isEmpty()) {
-				//Iterator<Juguete> iterador = lsta.iterator();
-
-				//while(iterador.hasNext()) {
-					//Juguete n = iterador.next();
-					//VOJuguete voj = new VOJuguete(n.getNumero(), n.getDescripcion(), _ced);
-					//listJuguetes.add(voj);
-				//}
-			//}
-			//else {
-				//throw new NiñosException(3);
-			//}
-			
-			return listJuguetes;
+			listJuguetes = n.listarJuguetes();
+			if(listJuguetes.isEmpty()) {
+				throw new JuguetesException(3);
+			}
+		}else {
+			throw new NiñosException(2);
 		}
-		catch(Exception e) {
-			throw new Exception(e);
-		}
+		
+		return listJuguetes;
 	}
-	
-	
 }

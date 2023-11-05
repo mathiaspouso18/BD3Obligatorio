@@ -88,10 +88,10 @@ public class DAOJuguetes {
 		}
     }
 
-    public List<VOJuguete> listarJuguetes() throws PersistenciaException {
+    public ArrayList<VOJuguete> listarJuguetes() throws PersistenciaException {
     	 try {
     		crearCon();
-         	List<VOJuguete> lista = new ArrayList<VOJuguete>();
+    		ArrayList<VOJuguete> lista = new ArrayList<VOJuguete>();
  			PreparedStatement statement = con.prepareStatement(consultas.listarJuguetes());
  			statement.setInt(1, this.cedulaNiño);
  			ResultSet response = statement.executeQuery();

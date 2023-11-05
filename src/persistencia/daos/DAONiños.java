@@ -10,6 +10,7 @@ import java.util.List;
 
 import logica.Juguete;
 import logica.Niño;
+import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 import persistencia.consultas.consultas;
@@ -71,10 +72,14 @@ public class DAONiños {
     public Niño find(int cedula) throws PersistenciaException {
         try {
         	crearCon();
+        	Niño n = null;
 			PreparedStatement statement = con.prepareStatement(consultas.seleccionarNiño());
 			statement.setInt(1, cedula);
 			ResultSet response = statement.executeQuery();
-			return new Niño(response.getInt("cedula"), response.getString("nombre"), response.getString("apellido"));
+			if(response.next()) {
+				n = new Niño(response.getInt("cedula"), response.getString("nombre"), response.getString("apellido"));
+			}
+			return n;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		} finally {

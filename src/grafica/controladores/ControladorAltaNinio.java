@@ -2,6 +2,7 @@ package grafica.controladores;
 import grafica.ventanas.VentanaPrincipal;
 import logica.Fachada;
 import logica.excepciones.NiñosException;
+import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 
 public class ControladorAltaNinio{
@@ -11,7 +12,7 @@ public class ControladorAltaNinio{
 		cap = new Fachada();
 	}
 	
-	public void AltaNinio(int _cedula, String _nombre, String _apellido) throws Exception {
+	public void AltaNinio(int _cedula, String _nombre, String _apellido) throws NiñosException, PersistenciaException {
 		VONiño _von;
 		_von = new VONiño(_cedula,_nombre,_apellido);
 		

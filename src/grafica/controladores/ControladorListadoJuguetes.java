@@ -4,16 +4,19 @@ import java.util.ArrayList;
 
 import grafica.ventanas.VentanaPrincipal;
 import logica.Fachada;
+import logica.excepciones.JuguetesException;
+import logica.excepciones.NiñosException;
+import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 
 public class ControladorListadoJuguetes{
 	private Fachada cap;
 	
-	public ControladorListadoJuguetes(VentanaPrincipal vp) throws Exception {
+	public ControladorListadoJuguetes(VentanaPrincipal vp) throws JuguetesException {
 		cap = new Fachada();
 	}
 	
-	public ArrayList<String []> ListadoJuguetes(int _cedula) throws Exception {
+	public ArrayList<String []> ListadoJuguetes(int _cedula) throws JuguetesException, NiñosException, PersistenciaException {
 		ArrayList<String []> array = new ArrayList<String []>();
 		try {
 			ArrayList<VOJuguete> arr = cap.ListarJuguetes(_cedula);
@@ -26,8 +29,8 @@ public class ControladorListadoJuguetes{
 				data[1] = descripcion;
 				array.add(data);
 			}	
-		} catch(Exception ve) {
-			throw ve;
+		} catch(JuguetesException je) {
+			throw je;
 		}
 		return array;
 	}

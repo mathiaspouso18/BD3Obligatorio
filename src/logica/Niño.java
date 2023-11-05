@@ -1,5 +1,6 @@
 package logica;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import logica.excepciones.PersistenciaException;
@@ -43,7 +44,7 @@ public class Niño {
     	return secuencia.k_esimo(num);
     }
 
-    public List<VOJuguete> listarJuguetes() throws PersistenciaException {
+    public ArrayList<VOJuguete> listarJuguetes() throws PersistenciaException {
     	return secuencia.listarJuguetes();
     }
 
