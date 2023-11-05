@@ -61,11 +61,15 @@ public class DAOJuguetes {
 
     public int largo() throws PersistenciaException {
         try {
+        	int largo = 0;
         	crearCon();
 			PreparedStatement statement = con.prepareStatement(consultas.cantidadDeJuguetes());
 			statement.setInt(1, this.cedulaNiño);
 			ResultSet response = statement.executeQuery();
-			return response.getInt("cantidad");
+			if(response.next()) {
+				largo = response.getInt("cantidad");
+			}
+			return largo;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		} finally {
@@ -76,11 +80,15 @@ public class DAOJuguetes {
     public Juguete k_esimo(int k) throws PersistenciaException {
         try {
         	crearCon();
+        	Juguete j = null;
 			PreparedStatement statement = con.prepareStatement(consultas.k_esimoJuguete());
 			statement.setInt(1, this.cedulaNiño);
 			statement.setInt(2, k);
 			ResultSet response = statement.executeQuery();
-			return new Juguete(response.getInt("numero"), response.getString("descripcion"));
+			if(response.next()) {				
+ 				j = new Juguete(response.getInt("numero"), response.getString("descripcion"));
+ 			}
+			return j;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		} finally {

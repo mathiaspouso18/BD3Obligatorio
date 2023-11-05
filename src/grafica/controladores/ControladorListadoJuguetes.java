@@ -22,11 +22,13 @@ public class ControladorListadoJuguetes{
 			ArrayList<VOJuguete> arr = cap.ListarJuguetes(_cedula);
 			for(VOJuguete v: arr) {
 				String [] data = new String[3];
+				Integer numero = v.getNumero();
 				Integer cedula = v.getCedulaNinio();
 				String descripcion = v.getDescripcion();
 				
-				data[0] = String.valueOf(cedula);
-				data[1] = descripcion;
+				data[0] = String.valueOf(numero);
+				data[1] = String.valueOf(cedula);
+				data[2] = descripcion;
 				array.add(data);
 			}	
 		} catch(JuguetesException je) {

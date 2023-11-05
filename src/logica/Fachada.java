@@ -55,10 +55,14 @@ public class Fachada implements IFachada {
 		}
 	}	
 	
-	public void BajaNiño(VONiño niño) throws Exception {
+	public void BajaNiño(VONiño niño) throws NiñosException, PersistenciaException {
 		int _cedula =  niño.getCedula();
 		
 		if(daoNiños.member(_cedula)) {
+			Niño n = daoNiños.find(_cedula);
+			if(n.cantidadJuguetes() != 0) {
+				n.borrarJuguetes();
+			}
 			daoNiños.delete(_cedula);
 		}
 		else {
@@ -102,5 +106,24 @@ public class Fachada implements IFachada {
 		}
 		
 		return listJuguetes;
+	}
+	
+	public String DarDescripcion(int _ced, int _num) throws NiñosException, PersistenciaException, JuguetesException {
+		String retorno = "";
+		if(daoNiños.member(_ced)) {
+			Niño n = daoNiños.find(_ced);
+			boolean tieneJuguete = n.tieneJuguete(_num);
+			if(tieneJuguete) {
+				Juguete j = n.obtenerJuguete(_num);
+				retorno = j.getDescripcion();
+			}
+			else {
+				throw new JuguetesException(4);
+			}
+		}else {
+			throw new NiñosException(2);
+		}
+		
+		return retorno;
 	}
 }

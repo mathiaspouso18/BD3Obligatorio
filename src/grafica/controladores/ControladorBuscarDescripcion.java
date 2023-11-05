@@ -1,14 +1,20 @@
 package grafica.controladores;
 
+import java.io.FileInputStream;
+import java.rmi.Naming;
+import java.util.ArrayList;
+import java.util.Properties;
+
 import grafica.ventanas.VentanaPrincipal;
 import logica.Fachada;
+import logica.excepciones.JuguetesException;
 import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
-import logica.valueObjects.VONiño;
+import logica.valueObjects.VOJuguete;
 
-public class ControladorBajaNinio{
+public class ControladorBuscarDescripcion{
 	private Fachada cap;
-	public ControladorBajaNinio(VentanaPrincipal vp) throws Exception {
+	public ControladorBuscarDescripcion(VentanaPrincipal vp) throws Exception {
 		
 		//Properties p = new Properties();
 		//String nomArch = "src/config/config.properties";
@@ -18,17 +24,16 @@ public class ControladorBajaNinio{
 		//String ruta = "//" + ip + ":" + puerto + "/fachada";
 		
 		//cap = (ICapaLogica) Naming.lookup(ruta);
-
 		cap = new Fachada();
 	}
 	
-	public void BajaNinio(int _cedula) throws NiñosException, PersistenciaException {
+	public String BuscarDecripcion(int _cedula, int _numero) throws NiñosException, PersistenciaException, JuguetesException {
+		String descripcion = "";
 		try {
-			VONiño von = new VONiño(_cedula, null, null);
-			cap.BajaNiño(von);
-			
-		}catch(NiñosException ne) {
-			throw ne;
+			descripcion = cap.DarDescripcion(_cedula, _numero);	
+		} catch(JuguetesException je) {
+			throw je;
 		}
+		return descripcion;
 	}
 }

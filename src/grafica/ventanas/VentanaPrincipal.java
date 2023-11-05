@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 
 import grafica.controladores.ControladorAltaJuguetes;
 import grafica.controladores.ControladorAltaNinio;
+import grafica.controladores.ControladorBajaNinio;
+import grafica.controladores.ControladorBuscarDescripcion;
 import grafica.controladores.ControladorListadoJuguetes;
 import grafica.controladores.ControladorListadoNinios;
 import logica.excepciones.JuguetesException;
@@ -45,9 +47,13 @@ public class VentanaPrincipal extends JFrame {
 	VentanaPrincipal vista;
 	private JTable tblNinios;
 	DefaultTableModel model;
-	private JTextField txtCedulaBuscar;
+	private JTextField txtCedula2;
 	private JTable tblJuguetesNinio;
 	DefaultTableModel modelJuguetes;
+	private JTextField txtNumeroJuguete;
+	private JTextField txtDescripcionObtenida;
+	private JTextField txtCedula3;
+	private JTextField txtCedula4;
 
 	/**
 	 * Launch the application.
@@ -74,7 +80,7 @@ public class VentanaPrincipal extends JFrame {
 		setAlwaysOnTop(true);
 		setTitle("Guardería");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 844, 646);
+		setBounds(100, 100, 844, 715);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		
@@ -82,6 +88,8 @@ public class VentanaPrincipal extends JFrame {
 		ControladorAltaJuguetes caj = new ControladorAltaJuguetes(vista);
 		ControladorListadoNinios cln = new ControladorListadoNinios(vista);
 		ControladorListadoJuguetes clj = new ControladorListadoJuguetes(vista);
+		ControladorBuscarDescripcion cbj = new ControladorBuscarDescripcion(vista);
+		ControladorBajaNinio cbn = new ControladorBajaNinio(vista);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 1, 0, 0));
@@ -92,32 +100,15 @@ public class VentanaPrincipal extends JFrame {
 		pnlNinios.setLayout(null);
 		
 		JPanel pnlCentral = new JPanel();
-		pnlCentral.setBounds(11, 24, 793, 580);
+		pnlCentral.setBounds(11, 24, 793, 641);
 		pnlNinios.add(pnlCentral);
 		pnlCentral.setLayout(null);
-
-		JPanel pnlListadoJuguetes = new JPanel();
 		
 		JPanel pnlJuguetes = new JPanel();
 		pnlJuguetes.setBorder(new TitledBorder(null, "Juguetes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlJuguetes.setBounds(0, 311, 782, 268);
+		pnlJuguetes.setBounds(0, 196, 782, 434);
 		pnlCentral.add(pnlJuguetes);
 		pnlJuguetes.setLayout(null);
-		
-		pnlListadoJuguetes.setBounds(10, 116, 751, 134);
-		pnlJuguetes.add(pnlListadoJuguetes);
-		
-		pnlListadoJuguetes.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Listado Juguetes Ni\u00F1o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlListadoJuguetes.setLayout(null);
-		
-		JScrollPane scrollTablaJuguetes = new JScrollPane();
-		scrollTablaJuguetes.setBounds(10, 20, 422, 103);
-		pnlListadoJuguetes.add(scrollTablaJuguetes);
-		
-		tblJuguetesNinio = new JTable();
-		tblJuguetesNinio.setShowGrid(false);
-		tblJuguetesNinio.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tblJuguetesNinio.setFillsViewportHeight(true);
 		modelJuguetes = new DefaultTableModel(){
             /**
 			 * 
@@ -130,73 +121,16 @@ public class VentanaPrincipal extends JFrame {
             }
         };
         
-		String[] columnasJuguetes = {"Cédula", "Descripcion"};
+		String[] columnasJuguetes = {"Número", "Cédula", "Descripcion"};
 		for(String s: columnasJuguetes) {
 			modelJuguetes.addColumn(s);
 		}
-		tblJuguetesNinio.setModel(modelJuguetes);		
-		scrollTablaJuguetes.setViewportView(tblJuguetesNinio);
-		JButton btnBuscar = new JButton("Listar juguetes");
-		btnBuscar.setBounds(442, 28, 135, 23);
-		pnlListadoJuguetes.add(btnBuscar);
-		JButton btnQuitarJuguetes = new JButton("Quitar juguetes");
-		btnQuitarJuguetes.setBounds(442, 62, 128, 23);
-		pnlListadoJuguetes.add(btnQuitarJuguetes);
-		
-		JLabel lblErrorJuguete = new JLabel("");
-		lblErrorJuguete.setBounds(442, 96, 299, 14);
-		pnlListadoJuguetes.add(lblErrorJuguete);
-		
-		lblErrorJuguete.setForeground(new Color(255, 0, 0));
-		btnQuitarJuguetes.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//lstModelJuguetesNinios.clear();
-			}
-		});
-		btnBuscar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String cedula = txtCedulaBuscar.getText();
-				
-				if(!cedula.equals("")) {
-					int c = Integer.valueOf(cedula);
-					try {
-						modelJuguetes.getDataVector().removeAllElements(); 
-						modelJuguetes.fireTableDataChanged();
-						ArrayList<String[]> datosJuguetes = new ArrayList<String []>();	
-						lblErrorJuguete.setText("");
-						datosJuguetes = clj.ListadoJuguetes(c);
-						for(String [] d: datosJuguetes) {
-							modelJuguetes.addRow(d);
-						}
-					}catch(JuguetesException je) {
-						lblErrorJuguete.setForeground(Color.RED);
-						lblErrorJuguete.setText(je.getMensajeJuguetesExcep());
-					} catch (NiñosException ne) {
-						lblErrorJuguete.setForeground(Color.RED);
-						lblErrorJuguete.setText(ne.getMensajeNiñosExcep());
-					} catch (PersistenciaException e1) {
-						e1.printStackTrace();
-					}
-				}else {
-					lblErrorJuguete.setText("Debe ingresar la cedula del niño");
-					lblErrorJuguete.setForeground(Color.RED);
-					lblErrorJuguete.setVisible(true);
-				}
-			}
-		});
 		
 		JPanel pnlAltaJuguete = new JPanel();
 		pnlAltaJuguete.setBorder(new TitledBorder(null, "Alta Juguete", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlAltaJuguete.setBounds(10, 21, 661, 84);
+		pnlAltaJuguete.setBounds(10, 21, 751, 84);
 		pnlJuguetes.add(pnlAltaJuguete);
 		pnlAltaJuguete.setLayout(null);
-		
-		txtCedulaBuscar = new JTextField();
-		txtCedulaBuscar.setBounds(172, 22, 111, 20);
-		pnlAltaJuguete.add(txtCedulaBuscar);
-		txtCedulaBuscar.setColumns(10);
 		
 		JLabel lblCedula_1 = new JLabel("Cedula");
 		lblCedula_1.setBounds(10, 25, 111, 14);
@@ -213,11 +147,164 @@ public class VentanaPrincipal extends JFrame {
 		JButton btnInsertarJuguete = new JButton("Agregar");
 		btnInsertarJuguete.setBounds(293, 21, 89, 23);
 		pnlAltaJuguete.add(btnInsertarJuguete);
+		
+		txtCedula3 = new JTextField();
+		txtCedula3.setColumns(10);
+		txtCedula3.setBounds(172, 22, 111, 20);
+		pnlAltaJuguete.add(txtCedula3);
+		
+		JLabel lblErrorJuguete = new JLabel("");
+		lblErrorJuguete.setBounds(413, 53, 299, 14);
+		pnlAltaJuguete.add(lblErrorJuguete);
+		
+		lblErrorJuguete.setForeground(new Color(255, 0, 0));
+		
+				JPanel pnlListadoJuguetes = new JPanel();
+				pnlListadoJuguetes.setBounds(10, 261, 751, 162);
+				pnlJuguetes.add(pnlListadoJuguetes);
+				
+				pnlListadoJuguetes.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Listado Juguetes Ni\u00F1o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				pnlListadoJuguetes.setLayout(null);
+				
+				JScrollPane scrollTablaJuguetes = new JScrollPane();
+				scrollTablaJuguetes.setBounds(10, 20, 422, 131);
+				pnlListadoJuguetes.add(scrollTablaJuguetes);
+				
+				tblJuguetesNinio = new JTable();
+				tblJuguetesNinio.setShowGrid(false);
+				tblJuguetesNinio.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				tblJuguetesNinio.setFillsViewportHeight(true);
+				tblJuguetesNinio.setModel(modelJuguetes);		
+				scrollTablaJuguetes.setViewportView(tblJuguetesNinio);
+				JButton btnBuscar = new JButton("Listar juguetes");
+				btnBuscar.setBounds(442, 49, 135, 23);
+				pnlListadoJuguetes.add(btnBuscar);
+				
+				JLabel lblErrorJuguete2 = new JLabel("");
+				lblErrorJuguete2.setForeground(Color.RED);
+				lblErrorJuguete2.setBounds(442, 123, 299, 14);
+				pnlListadoJuguetes.add(lblErrorJuguete2);
+				
+				txtCedula4 = new JTextField();
+				txtCedula4.setColumns(10);
+				txtCedula4.setBounds(491, 18, 86, 20);
+				pnlListadoJuguetes.add(txtCedula4);
+				
+				JLabel lblCedula2_1 = new JLabel("Cedula");
+				lblCedula2_1.setBounds(442, 21, 128, 14);
+				pnlListadoJuguetes.add(lblCedula2_1);
+				
+				JPanel panel = new JPanel();
+				panel.setBorder(new TitledBorder(null, "Descripcion de juguetes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				panel.setBounds(10, 116, 751, 134);
+				pnlJuguetes.add(panel);
+				panel.setLayout(null);
+				
+				JLabel lblCedula2 = new JLabel("Cedula");
+				lblCedula2.setBounds(10, 31, 94, 14);
+				panel.add(lblCedula2);
+				
+				txtCedula2 = new JTextField();
+				txtCedula2.setBounds(174, 28, 111, 20);
+				panel.add(txtCedula2);
+				txtCedula2.setColumns(10);
+				
+				JLabel lblNumeroJuguete = new JLabel("Numero de juguete");
+				lblNumeroJuguete.setBounds(10, 59, 136, 14);
+				panel.add(lblNumeroJuguete);
+				
+				txtNumeroJuguete = new JTextField();
+				txtNumeroJuguete.setColumns(10);
+				txtNumeroJuguete.setBounds(174, 56, 111, 20);
+				panel.add(txtNumeroJuguete);
+				
+				txtDescripcionObtenida = new JTextField();
+				txtDescripcionObtenida.setEditable(false);
+				txtDescripcionObtenida.setColumns(10);
+				txtDescripcionObtenida.setBounds(174, 87, 275, 20);
+				panel.add(txtDescripcionObtenida);
+				
+				JLabel lblDescripcionJuguete = new JLabel("Descripcion");
+				lblDescripcionJuguete.setBounds(10, 90, 136, 14);
+				panel.add(lblDescripcionJuguete);
+				
+				JLabel lblErrorJuguete3 = new JLabel("");
+				lblErrorJuguete3.setForeground(Color.RED);
+				lblErrorJuguete3.setBounds(295, 59, 299, 14);
+				panel.add(lblErrorJuguete3);
+				
+				JButton btnBuscarDescripcion = new JButton("Obtener descripcion");
+				btnBuscarDescripcion.setBounds(295, 27, 154, 23);
+				btnBuscarDescripcion.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String cedula = txtCedula2.getText();
+						String numero = txtNumeroJuguete.getText();
+						
+						if(!cedula.equals("") && !numero.equals("")) {
+							txtDescripcionObtenida.setText("");
+							int c = Integer.valueOf(cedula);
+							int n = Integer.valueOf(numero);
+							try {
+								String descripcion = cbj.BuscarDecripcion(c, n);
+								txtDescripcionObtenida.setText(descripcion);
+								lblErrorJuguete3.setText("");
+							}catch(JuguetesException je) {
+								lblErrorJuguete3.setForeground(Color.RED);
+								lblErrorJuguete3.setText(je.getMensajeJuguetesExcep());
+							} catch (NiñosException ne) {
+								lblErrorJuguete3.setForeground(Color.RED);
+								lblErrorJuguete3.setText(ne.getMensajeNiñosExcep());
+							} catch (PersistenciaException e1) {
+								e1.printStackTrace();
+							}
+						}else {
+							lblErrorJuguete3.setText("Los campos no pueden estar vacíos");
+							lblErrorJuguete3.setForeground(Color.RED);
+							lblErrorJuguete3.setVisible(true);
+						}
+					}
+				});
+				panel.add(btnBuscarDescripcion);
+				
+				
+				btnBuscar.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String cedula = txtCedula4.getText();
+						
+						if(!cedula.equals("")) {
+							int c = Integer.valueOf(cedula);
+							try {
+								modelJuguetes.getDataVector().removeAllElements(); 
+								modelJuguetes.fireTableDataChanged();
+								ArrayList<String[]> datosJuguetes = new ArrayList<String []>();	
+								lblErrorJuguete2.setText("");
+								datosJuguetes = clj.ListadoJuguetes(c);
+								for(String [] d: datosJuguetes) {
+									modelJuguetes.addRow(d);
+								}
+							}catch(JuguetesException je) {
+								lblErrorJuguete2.setForeground(Color.RED);
+								lblErrorJuguete2.setText(je.getMensajeJuguetesExcep());
+							} catch (NiñosException ne) {
+								lblErrorJuguete2.setForeground(Color.RED);
+								lblErrorJuguete2.setText(ne.getMensajeNiñosExcep());
+							} catch (PersistenciaException e1) {
+								e1.printStackTrace();
+							}
+						}else {
+							lblErrorJuguete2.setText("Debe ingresar la cedula del niño");
+							lblErrorJuguete2.setForeground(Color.RED);
+							lblErrorJuguete2.setVisible(true);
+						}
+					}
+				});
 		btnInsertarJuguete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String descripcion = txtDescripcion.getText();
-				String cedula = txtCedulaBuscar.getText();
+				String cedula = txtCedula3.getText();
 				
 				if(!descripcion.equals("") && !cedula.equals("")) {
 					int _ced = Integer.valueOf(cedula);
@@ -245,22 +332,7 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		
-		JPanel pnlListadoNinios = new JPanel();
-		pnlListadoNinios.setBorder(new TitledBorder(null, "Listado Ni\u00F1os", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlListadoNinios.setBounds(0, 146, 782, 160);
-		pnlCentral.add(pnlListadoNinios);
-		pnlListadoNinios.setLayout(null);
-		
-		JScrollPane scrollTablaNinios = new JScrollPane();
-		scrollTablaNinios.setBounds(10, 20, 554, 125);
-		pnlListadoNinios.add(scrollTablaNinios);
-		
 		String[] columnas = {"Cédula", "Nombre", "Apellido"};
-		
-		tblNinios = new JTable();
-		tblNinios.setFillsViewportHeight(true);
-		tblNinios.setShowGrid(false);
-		tblNinios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		model = new DefaultTableModel(){
             /**
 			 * 
@@ -276,39 +348,11 @@ public class VentanaPrincipal extends JFrame {
 		for(String s: columnas) {
 			model.addColumn(s);
 		}
-		tblNinios.setModel(model);
-		
-		scrollTablaNinios.setViewportView(tblNinios);
-		
-		JButton btnListarNiños = new JButton("Listar niños");
-		btnListarNiños.setBounds(574, 122, 136, 23);
-		btnListarNiños.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ArrayList<String[]> datos = new ArrayList<String []>();
-				
-			    model.getDataVector().removeAllElements(); 
-			    model.fireTableDataChanged();
-				
-				try {
-					datos = cln.ListadoNinios();
-					for(String [] d: datos) {
-						model.addRow(d);
-					}
-				}catch(NiñosException ne) {
-
-				} catch (PersistenciaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		pnlListadoNinios.add(btnListarNiños);
 		
 		JPanel pnlAltaNinio = new JPanel();
 		pnlAltaNinio.setLayout(null);
 		pnlAltaNinio.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Alta Ni\u00F1o", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlAltaNinio.setBounds(0, 0, 782, 135);
+		pnlAltaNinio.setBounds(0, 0, 782, 185);
 		pnlCentral.add(pnlAltaNinio);
 		
 		JLabel lblCedula = new JLabel("Cedula");
@@ -339,14 +383,86 @@ public class VentanaPrincipal extends JFrame {
 		txtApellido.setColumns(10);
 		
 		JButton btnInsertarNinio = new JButton("Insertar");
-		btnInsertarNinio.setBounds(186, 18, 86, 23);
+		btnInsertarNinio.setBounds(186, 18, 136, 23);
 		pnlAltaNinio.add(btnInsertarNinio);
 		
 		JLabel lblError = new JLabel("");
-		lblError.setBounds(424, 104, 336, 20);
+		lblError.setBounds(10, 139, 312, 20);
 		pnlAltaNinio.add(lblError);
 		lblError.setForeground(new Color(255, 0, 0));
 		lblError.setText("");
+		
+		JScrollPane scrollTablaNinios = new JScrollPane();
+		scrollTablaNinios.setBounds(332, 26, 429, 133);
+		pnlAltaNinio.add(scrollTablaNinios);
+		
+		tblNinios = new JTable();
+		scrollTablaNinios.setViewportView(tblNinios);
+		tblNinios.setFillsViewportHeight(true);
+		tblNinios.setShowGrid(false);
+		tblNinios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tblNinios.setModel(model);
+		
+		JButton btnListarNiños = new JButton("Listar niños");
+		btnListarNiños.setBounds(186, 43, 136, 23);
+		pnlAltaNinio.add(btnListarNiños);
+		JButton btnQuitarNiño = new JButton("Quitar niño");
+		btnQuitarNiño.setBounds(10, 97, 135, 23);
+		pnlAltaNinio.add(btnQuitarNiño);
+		btnQuitarNiño.setForeground(new Color(255, 0, 0));
+		
+					
+					btnQuitarNiño.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							String cedula = txtCedula.getText();
+							if(!cedula.equals("")) {
+								int _ced = Integer.valueOf(cedula);
+								try {
+									cbn.BajaNinio(_ced);
+									lblError.setText("Niño eliminado de la base de datos");
+									txtCedula.setText("");
+									modelJuguetes.getDataVector().removeAllElements(); 
+									modelJuguetes.fireTableDataChanged();
+									lblError.setForeground(Color.GREEN);
+									lblError.setVisible(true);
+								}
+								catch(NiñosException ne) {
+									lblError.setText(ne.getMensajeNiñosExcep());
+									lblError.setForeground(Color.RED);
+									lblError.setVisible(true);
+								} catch (PersistenciaException e1) {
+									e1.printStackTrace();
+								}
+							}else {
+								lblError.setText("Debe ingresar la cedula del niño");
+								lblError.setForeground(Color.RED);
+								lblError.setVisible(true);
+							}
+							
+						}
+					});
+		btnListarNiños.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String[]> datos = new ArrayList<String []>();
+				
+			    model.getDataVector().removeAllElements(); 
+			    model.fireTableDataChanged();
+				
+				try {
+					datos = cln.ListadoNinios();
+					for(String [] d: datos) {
+						model.addRow(d);
+					}
+				}catch(NiñosException ne) {
+
+				} catch (PersistenciaException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnInsertarNinio.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

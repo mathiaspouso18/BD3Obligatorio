@@ -33,7 +33,11 @@ public class Niño {
     }
 
     public boolean tieneJuguete(int numero) throws PersistenciaException {
-    	return secuencia.largo() > 0;
+    	return secuencia.k_esimo(numero) != null;
+    }
+    
+    public int cantidadJuguetes() throws PersistenciaException {
+    	return secuencia.largo();
     }
 
     public void addJuguete(Juguete juguete) throws PersistenciaException {
@@ -48,7 +52,7 @@ public class Niño {
     	return secuencia.listarJuguetes();
     }
 
-    public void borrarJuguetes() {
-        
+    public void borrarJuguetes() throws PersistenciaException {
+        secuencia.borrarJuguetes();
     }
 }
