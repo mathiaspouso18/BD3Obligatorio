@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -29,7 +30,7 @@ public class ControladorListadoJuguetes{
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
-	public ArrayList<String []> ListadoJuguetes(int _cedula) throws JuguetesException, NiñosException, PersistenciaException {
+	public ArrayList<String []> ListadoJuguetes(int _cedula) throws JuguetesException, NiñosException, PersistenciaException, RemoteException {
 		ArrayList<String []> array = new ArrayList<String []>();
 		try {
 			ArrayList<VOJuguete> arr = cap.ListarJuguetes(_cedula);

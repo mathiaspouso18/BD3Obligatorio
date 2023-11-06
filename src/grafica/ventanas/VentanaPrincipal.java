@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import java.awt.Color;
@@ -257,6 +258,9 @@ public class VentanaPrincipal extends JFrame {
 								lblErrorJuguete3.setText(ne.getMensajeNiñosExcep());
 							} catch (PersistenciaException e1) {
 								e1.printStackTrace();
+							} catch (RemoteException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
 							}
 						}else {
 							lblErrorJuguete3.setText("Los campos no pueden estar vacíos");
@@ -291,6 +295,9 @@ public class VentanaPrincipal extends JFrame {
 								lblErrorJuguete2.setForeground(Color.RED);
 								lblErrorJuguete2.setText(ne.getMensajeNiñosExcep());
 							} catch (PersistenciaException e1) {
+								e1.printStackTrace();
+							} catch (RemoteException e1) {
+								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}else {
@@ -433,6 +440,9 @@ public class VentanaPrincipal extends JFrame {
 									lblError.setVisible(true);
 								} catch (PersistenciaException e1) {
 									e1.printStackTrace();
+								} catch (RemoteException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
 								}
 							}else {
 								lblError.setText("Debe ingresar la cedula del niño");
@@ -460,6 +470,9 @@ public class VentanaPrincipal extends JFrame {
 				} catch (PersistenciaException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -485,6 +498,9 @@ public class VentanaPrincipal extends JFrame {
 						lblError.setForeground(Color.RED);
 
 					} catch (PersistenciaException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}

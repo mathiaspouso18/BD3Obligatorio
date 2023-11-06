@@ -1,6 +1,8 @@
 package logica.valueObjects;
 
-public class VOJuguete {
+import java.io.Serializable;
+
+public class VOJuguete implements Serializable  {
 	int numero;
 	String descripcion;
 	int cedulaNinio;

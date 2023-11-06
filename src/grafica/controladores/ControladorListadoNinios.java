@@ -2,6 +2,7 @@ package grafica.controladores;
 
 import java.io.FileInputStream;
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -25,7 +26,7 @@ public class ControladorListadoNinios{
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
-	public ArrayList<String []> ListadoNinios() throws NiñosException, PersistenciaException {
+	public ArrayList<String []> ListadoNinios() throws NiñosException, PersistenciaException, RemoteException {
 		ArrayList<String []> array = new ArrayList<String []>();
 		try {
 			ArrayList<VONiño> arr = cap.ListarNiños();

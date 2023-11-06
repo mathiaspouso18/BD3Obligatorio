@@ -2,6 +2,7 @@ package grafica.controladores;
 
 import java.io.FileInputStream;
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.util.Properties;
 
 import grafica.ventanas.VentanaPrincipal;
@@ -24,7 +25,7 @@ public class ControladorBuscarDescripcion{
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
-	public String BuscarDecripcion(int _cedula, int _numero) throws NiñosException, PersistenciaException, JuguetesException {
+	public String BuscarDecripcion(int _cedula, int _numero) throws NiñosException, PersistenciaException, JuguetesException, RemoteException {
 		String descripcion = "";
 		try {
 			descripcion = cap.DarDescripcion(_cedula, _numero);	

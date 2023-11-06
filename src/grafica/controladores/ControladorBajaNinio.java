@@ -2,6 +2,7 @@ package grafica.controladores;
 
 import java.io.FileInputStream;
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.util.Properties;
 
 import grafica.ventanas.VentanaPrincipal;
@@ -24,7 +25,7 @@ public class ControladorBajaNinio{
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
-	public void BajaNinio(int _cedula) throws NiñosException, PersistenciaException {
+	public void BajaNinio(int _cedula) throws NiñosException, PersistenciaException, RemoteException {
 		try {
 			VONiño von = new VONiño(_cedula, null, null);
 			cap.BajaNiño(von);

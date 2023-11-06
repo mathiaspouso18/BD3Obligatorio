@@ -1,6 +1,7 @@
 package logica;
 
 import java.io.IOException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +13,9 @@ import logica.valueObjects.VOJuguete;
 import logica.valueObjects.VONiño;
 import persistencia.daos.DAONiños;
 
-public class Fachada implements IFachada {
+public class Fachada extends UnicastRemoteObject implements  IFachada {
+	private static final long serialVersionUID = 1L;
+
 	private DAONiños daoNiños;
 	
 	private static Fachada instance = null;
@@ -24,7 +27,7 @@ public class Fachada implements IFachada {
 		return instance;
 	}
 	
-	public Fachada() {
+	public Fachada() throws ClassNotFoundException, IOException {
 		daoNiños = new DAONiños();
 	}
 	
