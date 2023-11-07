@@ -6,10 +6,12 @@ import java.io.InputStream;
 import java.util.Properties;
 
 
-
 public class ConfigManager {
 	private static ConfigManager instance;
-    private static final Object lock = new Object(); //Se usa en entornos de programación multihilo, donde varios hilos pueden obtener la instancia al mismo tiempo
+	//Se usa en entornos de programación multihilo, 
+	//donde varios hilos pueden obtener la instancia al mismo tiempo
+    //lo vi buscando como hacer el singleton, si no sirve lo pelamos
+    private static final Object lock = new Object(); 
     private Properties properties;
 
     private ConfigManager() throws ConfigException {
