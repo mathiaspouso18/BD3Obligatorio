@@ -1,7 +1,6 @@
 package persistencia.daos;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,10 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import config.ConfigException;
-import config.ConfigManager;
-import logica.Juguete;
 import logica.Niño;
-import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 import persistencia.consultas.consultas;
@@ -20,16 +16,9 @@ import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
 public class DAONiños {
-	private String url;
-	private String user;
-	private String password;
 	Connection con;
 
-	public DAONiños() throws ConfigException {
-		this.url = ConfigManager.getInstance().getProperty("url");
-		this.user = ConfigManager.getInstance().getProperty("user");
-		this.password = ConfigManager.getInstance().getProperty("password");
-	}
+	public DAONiños() { }
 
 	public boolean member(IConexion _con, int cedula) throws PersistenciaException {
 		try {

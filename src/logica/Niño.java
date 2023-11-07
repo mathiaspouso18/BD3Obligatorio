@@ -1,13 +1,11 @@
 package logica;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import config.ConfigException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 import persistencia.daos.DAOJuguetes;
-import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
 public class Niño {

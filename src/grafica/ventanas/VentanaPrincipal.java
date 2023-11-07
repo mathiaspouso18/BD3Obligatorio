@@ -20,7 +20,6 @@ import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -35,9 +34,6 @@ import java.awt.Color;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
 
 public class VentanaPrincipal extends JFrame {
 

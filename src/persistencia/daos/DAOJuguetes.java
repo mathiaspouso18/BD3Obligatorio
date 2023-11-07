@@ -1,22 +1,13 @@
 package persistencia.daos;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 
-import config.ConfigException;
-import config.ConfigManager;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import logica.Juguete;
-import logica.Niño;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 import persistencia.consultas.consultas;
@@ -25,15 +16,9 @@ import persistencia.poolConexiones.IConexion;
 
 public class DAOJuguetes {
 	private int cedulaNiño;
-	private String url;
-	private String user;
-	private String password;
 
-	public DAOJuguetes(int cedula) throws ConfigException {
+	public DAOJuguetes(int cedula) {
 		this.cedulaNiño = cedula;
-		this.url = ConfigManager.getInstance().getProperty("url");
-		this.user = ConfigManager.getInstance().getProperty("user");
-		this.password = ConfigManager.getInstance().getProperty("password");
 	}
 
 	public void insback(IConexion _con, Juguete juguete) throws PersistenciaException {
