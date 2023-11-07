@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
+import config.ConfigException;
+import config.ConfigManager;
 import logica.excepciones.PersistenciaException;
 
 public class PoolConexiones implements IPoolConexiones{
@@ -38,7 +39,7 @@ public class PoolConexiones implements IPoolConexiones{
     }
 
     @Override
-    public IConexion obtenerConexion(boolean modifica) throws PersistenciaException{
+    public IConexion obtenerConexion(boolean modifica) throws PersistenciaException, ConfigException{
         try{
             synchronized (this) {
                 if (tope >= 0){//Tengo conexiones disponibles
@@ -88,13 +89,12 @@ public class PoolConexiones implements IPoolConexiones{
     	}
     }
     
-    
-    private Connection crearConnection() throws PersistenciaException { 
+    private Connection crearConnection() throws PersistenciaException, ConfigException { 
         try {
             return DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306",
-                    "root",
-                    "mypass"
+            		ConfigManager.getInstance().getProperty("url"),
+            		ConfigManager.getInstance().getProperty("user"),
+            		ConfigManager.getInstance().getProperty("password")
             );
         }catch (SQLException e){
         	throw new PersistenciaException(3);

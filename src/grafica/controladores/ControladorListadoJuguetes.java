@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import config.ConfigException;
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
 import logica.excepciones.JuguetesException;
@@ -30,7 +31,7 @@ public class ControladorListadoJuguetes{
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
-	public ArrayList<String []> ListadoJuguetes(int _cedula) throws JuguetesException, NiñosException, PersistenciaException, RemoteException {
+	public ArrayList<String []> ListadoJuguetes(int _cedula) throws JuguetesException, NiñosException, PersistenciaException, RemoteException, ConfigException {
 		ArrayList<String []> array = new ArrayList<String []>();
 		try {
 			ArrayList<VOJuguete> arr = cap.ListarJuguetes(_cedula);

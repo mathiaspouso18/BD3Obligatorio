@@ -5,6 +5,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
+import config.ConfigException;
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
 import logica.excepciones.JuguetesException;
@@ -25,7 +26,7 @@ public class ControladorBuscarDescripcion{
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
-	public String BuscarDecripcion(int _cedula, int _numero) throws NiñosException, PersistenciaException, JuguetesException, RemoteException {
+	public String BuscarDecripcion(int _cedula, int _numero) throws NiñosException, PersistenciaException, JuguetesException, RemoteException, ConfigException {
 		String descripcion = "";
 		try {
 			descripcion = cap.DarDescripcion(_cedula, _numero);	

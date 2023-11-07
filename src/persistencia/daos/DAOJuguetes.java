@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import config.ConfigException;
+import config.ConfigManager;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,13 +22,16 @@ import persistencia.consultas.consultas;
 
 public class DAOJuguetes {
     private int cedulaNiño;
-    private String url = "jdbc:mysql://localhost:3306/guarderia";
-    private String user = "root";
-    private String password = "root";
+    private String url;
+    private String user;
+    private String password;
     Connection con;
     
-    public DAOJuguetes(int cedula) {
+    public DAOJuguetes(int cedula) throws ConfigException {
     	this.cedulaNiño = cedula;
+    	this.url = ConfigManager.getInstance().getProperty("url");
+    	this.user = ConfigManager.getInstance().getProperty("user");
+    	this.password = ConfigManager.getInstance().getProperty("password");
     }
     
     private void crearCon() throws PersistenciaException {

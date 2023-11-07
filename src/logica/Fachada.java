@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import config.ConfigException;
 import logica.excepciones.JuguetesException;
 import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
@@ -20,18 +21,18 @@ public class Fachada extends UnicastRemoteObject implements  IFachada {
 	
 	private static Fachada instance = null;
 	
-	public static Fachada getInstance() throws ClassNotFoundException, IOException, PersistenciaException {
+	public static Fachada getInstance() throws ClassNotFoundException, IOException, PersistenciaException, ConfigException {
 		if (instance == null) {
 			instance = new Fachada();
 		}
 		return instance;
 	}
 	
-	public Fachada() throws ClassNotFoundException, IOException {
+	public Fachada() throws ClassNotFoundException, IOException, ConfigException {
 		daoNiños = new DAONiños();
 	}
 	
-	public void AltaNiño(VONiño niño) throws PersistenciaException, NiñosException {
+	public void AltaNiño(VONiño niño) throws PersistenciaException, NiñosException, ConfigException {
 		int _cedula =  niño.getCedula();
 	
 		if(!daoNiños.member(_cedula)) {
@@ -46,7 +47,7 @@ public class Fachada extends UnicastRemoteObject implements  IFachada {
 		}
 	}
 	
-	public void AltaJuguete(VOJuguete juguete) throws NiñosException, PersistenciaException, JuguetesException {
+	public void AltaJuguete(VOJuguete juguete) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
 		
 		int _ced = juguete.getCedulaNinio();
 		int _ultimoJuguete = 0;
@@ -67,7 +68,7 @@ public class Fachada extends UnicastRemoteObject implements  IFachada {
 		}
 	}	
 	
-	public void BajaNiño(VONiño niño) throws NiñosException, PersistenciaException {
+	public void BajaNiño(VONiño niño) throws NiñosException, PersistenciaException, ConfigException {
 		int _cedula =  niño.getCedula();
 		
 		if(daoNiños.member(_cedula)) {
@@ -104,7 +105,7 @@ public class Fachada extends UnicastRemoteObject implements  IFachada {
 		return listNiños;
 	}
 	
-	public ArrayList<VOJuguete> ListarJuguetes(int _ced) throws NiñosException, PersistenciaException, JuguetesException {
+	public ArrayList<VOJuguete> ListarJuguetes(int _ced) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
 		ArrayList<VOJuguete> listJuguetes = null;
 		
 		if(daoNiños.member(_ced)) {
@@ -120,7 +121,7 @@ public class Fachada extends UnicastRemoteObject implements  IFachada {
 		return listJuguetes;
 	}
 	
-	public String DarDescripcion(int _ced, int _num) throws NiñosException, PersistenciaException, JuguetesException {
+	public String DarDescripcion(int _ced, int _num) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
 		String retorno = "";
 		if(daoNiños.member(_ced)) {
 			Niño n = daoNiños.find(_ced);

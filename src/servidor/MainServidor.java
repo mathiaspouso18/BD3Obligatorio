@@ -1,33 +1,29 @@
 package servidor;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.util.Properties;
 
+import config.ConfigException;
+import config.ConfigManager;
 import logica.Fachada;
 import logica.excepciones.PersistenciaException;
 
 public class MainServidor {
-	public static void main(String[] args) throws ClassNotFoundException, IOException, PersistenciaException{
+	public static void main(String[] args) throws ClassNotFoundException, IOException, PersistenciaException, ConfigException{
 		try
 		{ 
-			Properties p = new Properties();
-			String nomArch = "src/config/Config.properties";
-			p.load (new FileInputStream (nomArch));
-			String ip = p.getProperty("ipServidor");
-			String puerto = p.getProperty("puertoServidor");
-			int port = Integer.parseInt(puerto);
+			String ip = ConfigManager.getInstance().getProperty("ipServidor");
+			int port = ConfigManager.getInstance().getIntProperty("puertoServidor");
 		
 			//pongo a correr el rmiregistry
 			LocateRegistry.createRegistry(port);
 		
 			//publico el objeto remoto en dicha ip y puerto
-			String ruta = "//" + ip + ":" + puerto + "/fachada";
+			String ruta = "//" + ip + ":" + Integer.toString(port) + "/fachada";
 			Fachada fachada = new Fachada();
 			System.out.println("Antes de publicar");
 			Naming.rebind(ruta, fachada);

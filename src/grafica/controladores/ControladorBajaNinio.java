@@ -5,6 +5,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
+import config.ConfigException;
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
 import logica.excepciones.NiñosException;
@@ -25,7 +26,7 @@ public class ControladorBajaNinio{
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
-	public void BajaNinio(int _cedula) throws NiñosException, PersistenciaException, RemoteException {
+	public void BajaNinio(int _cedula) throws NiñosException, PersistenciaException, RemoteException, ConfigException {
 		try {
 			VONiño von = new VONiño(_cedula, null, null);
 			cap.BajaNiño(von);

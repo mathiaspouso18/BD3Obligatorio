@@ -1,6 +1,10 @@
 package logica.excepciones;
 
 public class JuguetesException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int codigoError;
 
 	public JuguetesException(int cod) {

@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import config.ConfigException;
 import grafica.controladores.ControladorAltaJuguetes;
 import grafica.controladores.ControladorAltaNinio;
 import grafica.controladores.ControladorBajaNinio;
@@ -261,6 +262,9 @@ public class VentanaPrincipal extends JFrame {
 							} catch (RemoteException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
+							} catch (ConfigException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
 							}
 						}else {
 							lblErrorJuguete3.setText("Los campos no pueden estar vacíos");
@@ -297,6 +301,9 @@ public class VentanaPrincipal extends JFrame {
 							} catch (PersistenciaException e1) {
 								e1.printStackTrace();
 							} catch (RemoteException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (ConfigException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
@@ -443,6 +450,9 @@ public class VentanaPrincipal extends JFrame {
 								} catch (RemoteException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
+								} catch (ConfigException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
 								}
 							}else {
 								lblError.setText("Debe ingresar la cedula del niño");
@@ -501,6 +511,9 @@ public class VentanaPrincipal extends JFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ConfigException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}

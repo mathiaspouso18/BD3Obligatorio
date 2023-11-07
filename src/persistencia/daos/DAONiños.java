@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import config.ConfigException;
+import config.ConfigManager;
 import logica.Juguete;
 import logica.Niño;
 import logica.excepciones.NiñosException;
@@ -16,12 +18,15 @@ import logica.valueObjects.VONiño;
 import persistencia.consultas.consultas;
 
 public class DAONiños {
-    private String url = "jdbc:mysql://localhost:3306/guarderia";
-    private String user = "root";
-    private String password = "root";
+    private String url;
+    private String user;
+    private String password;
     Connection con;
     
-    public DAONiños() {
+    public DAONiños() throws ConfigException {
+    	this.url = ConfigManager.getInstance().getProperty("url");
+    	this.user = ConfigManager.getInstance().getProperty("user");
+    	this.password = ConfigManager.getInstance().getProperty("password");
     }
     
     private void crearCon() throws PersistenciaException {
@@ -69,7 +74,7 @@ public class DAONiños {
 		}
     }
 
-    public Niño find(int cedula) throws PersistenciaException {
+    public Niño find(int cedula) throws PersistenciaException, ConfigException {
         try {
         	crearCon();
         	Niño n = null;
