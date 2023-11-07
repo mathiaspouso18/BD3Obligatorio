@@ -12,13 +12,13 @@ import logica.excepciones.JuguetesException;
 import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 
-public class ControladorBuscarDescripcion{
+public class ControladorBuscarDescripcion {
 	private IFachada cap;
+
 	public ControladorBuscarDescripcion(VentanaPrincipal vp) throws Exception {
-		
 		Properties p = new Properties();
 		String nomArch = "src/config/config.properties";
-		p.load (new FileInputStream (nomArch));
+		p.load(new FileInputStream(nomArch));
 		String ip = p.getProperty("ipServidor");
 		String puerto = p.getProperty("puertoServidor");
 		String ruta = "//" + ip + ":" + puerto + "/fachada";

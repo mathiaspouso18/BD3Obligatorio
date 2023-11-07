@@ -36,11 +36,11 @@ public class Niño {
     }
 
     public boolean tieneJuguete(IConexion con, int numero) throws PersistenciaException {
-    	return secuencia.k_esimo(con, numero) != null;
+        return secuencia.k_esimo(con, numero) != null;
     }
-    
+
     public int cantidadJuguetes(IConexion con) throws PersistenciaException {
-    	return secuencia.largo(con);
+        return secuencia.largo(con);
     }
 
     public void addJuguete(IConexion con, Juguete juguete) throws PersistenciaException {
@@ -48,11 +48,11 @@ public class Niño {
     }
 
     public Juguete obtenerJuguete(IConexion con, int num) throws PersistenciaException {
-    	return secuencia.k_esimo(con, num);
+        return secuencia.k_esimo(con, num);
     }
 
     public ArrayList<VOJuguete> listarJuguetes(IConexion con) throws PersistenciaException {
-    	return secuencia.listarJuguetes(con);
+        return secuencia.listarJuguetes(con);
     }
 
     public void borrarJuguetes(IConexion con) throws PersistenciaException {

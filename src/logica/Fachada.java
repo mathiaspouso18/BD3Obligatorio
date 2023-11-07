@@ -23,9 +23,9 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	private static final long serialVersionUID = 1L;
 
 	private DAONiños daoNiños;
-	
+
 	private static Fachada instance = null;
-	
+
 	private static IPoolConexiones pool;
 	
 	public static Fachada getInstance() throws ClassNotFoundException, IOException, PersistenciaException, ConfigException {

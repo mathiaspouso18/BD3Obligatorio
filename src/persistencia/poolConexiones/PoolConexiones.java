@@ -9,7 +9,6 @@ import config.ConfigManager;
 import logica.excepciones.PersistenciaException;
 
 public class PoolConexiones implements IPoolConexiones {
-
 	private static PoolConexiones instancia;
 
 	private int nivelTransaccionalidad;

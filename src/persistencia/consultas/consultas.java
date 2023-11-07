@@ -14,20 +14,20 @@ public class consultas {
 	public static String listarNiños() {
 		return "SELECT * FROM Ninios ORDER BY cedula";
 	}
-	
+
 	public static String borrarNiño() {
 		return "DELETE FROM Ninios WHERE cedula = ?";
 	}
-	
+
 	public static String seleccionarNiño() {
 		return "SELECT * FROM Ninios WHERE cedula = ?";
 	}
-	
+
 	/*  /------------------\
 	 *  |  TABLA JUGUETES  |
 	 *	\------------------/
 	 */
-	
+
 	public static String insertarJuguete() {
 		return "INSERT INTO Juguetes (numero, descripcion, cedulaNinio) VALUES (?, ?, ?)";
 	}

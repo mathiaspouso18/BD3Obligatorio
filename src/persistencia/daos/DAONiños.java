@@ -20,20 +20,20 @@ import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
 public class DAONiños {
-    private String url;
-    private String user;
-    private String password;
-    Connection con;
-    
-    public DAONiños() throws ConfigException {
-    	this.url = ConfigManager.getInstance().getProperty("url");
-    	this.user = ConfigManager.getInstance().getProperty("user");
-    	this.password = ConfigManager.getInstance().getProperty("password");
-    }
-    
-    public boolean member(IConexion _con, int cedula) throws PersistenciaException {
-        try {
-         	Connection con = ((Conexion) _con).getCon();
+	private String url;
+	private String user;
+	private String password;
+	Connection con;
+
+	public DAONiños() throws ConfigException {
+		this.url = ConfigManager.getInstance().getProperty("url");
+		this.user = ConfigManager.getInstance().getProperty("user");
+		this.password = ConfigManager.getInstance().getProperty("password");
+	}
+
+	public boolean member(IConexion _con, int cedula) throws PersistenciaException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
 			PreparedStatement statement = con.prepareStatement(consultas.seleccionarNiño());
 			statement.setInt(1, cedula);
 			ResultSet response = statement.executeQuery();

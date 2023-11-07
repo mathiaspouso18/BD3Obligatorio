@@ -5,16 +5,16 @@ import java.sql.Statement;
 
 public class Main {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        String url = "jdbc:mysql://localhost:3306/";
-        String user = "root";
-        String password = "root";
+		String url = "jdbc:mysql://localhost:3306/";
+		String user = "root";
+		String password = "root";
 
-        Connection conn = DriverManager.getConnection(url, user, password);
-        try{
-        	Statement stmt = conn.createStatement();
+		Connection conn = DriverManager.getConnection(url, user, password);
+		try {
+			Statement stmt = conn.createStatement();
 
-            // Crear la base de datos Bedelia
-            String sqlCrearBaseDatos = "CREATE DATABASE Guarderia";
+			// Crear la base de datos Bedelia
+			String sqlCrearBaseDatos = "CREATE DATABASE Guarderia";
             stmt.executeUpdate(sqlCrearBaseDatos);
             
             // Usar la base de datos Bedelia
