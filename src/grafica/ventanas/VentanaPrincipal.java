@@ -36,10 +36,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 public class VentanaPrincipal extends JFrame {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static JTextField txtCedula;

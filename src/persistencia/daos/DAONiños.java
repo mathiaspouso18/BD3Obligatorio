@@ -28,11 +28,11 @@ public class DAONiños {
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		}
-    }
+	}
 
-    public void insert(IConexion _con, Niño niño) throws PersistenciaException {
-        try {
-         	Connection con = ((Conexion) _con).getCon();
+	public void insert(IConexion _con, Niño niño) throws PersistenciaException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
 			PreparedStatement statement = con.prepareStatement(consultas.insertarNiño());
 			statement.setInt(1, niño.getCedula());
 			statement.setString(2, niño.getNombre());
@@ -41,47 +41,47 @@ public class DAONiños {
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		}
-    }
+	}
 
-    public Niño find(IConexion _con, int cedula) throws PersistenciaException, ConfigException {
-        try {
-         	Connection con = ((Conexion) _con).getCon();
-        	Niño n = null;
+	public Niño find(IConexion _con, int cedula) throws PersistenciaException, ConfigException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
+			Niño n = null;
 			PreparedStatement statement = con.prepareStatement(consultas.seleccionarNiño());
 			statement.setInt(1, cedula);
 			ResultSet response = statement.executeQuery();
-			if(response.next()) {
+			if (response.next()) {
 				n = new Niño(response.getInt("cedula"), response.getString("nombre"), response.getString("apellido"));
 			}
 			return n;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		}
-    }
+	}
 
-    public void delete(IConexion _con, int cedula) throws PersistenciaException {
-        try {
-         	Connection con = ((Conexion) _con).getCon();
+	public void delete(IConexion _con, int cedula) throws PersistenciaException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
 			PreparedStatement statement = con.prepareStatement(consultas.borrarNiño());
 			statement.setInt(1, cedula);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		}
-    }
+	}
 
-    public List<VONiño> listarNiños(IConexion _con) throws PersistenciaException {
-        try {
-         	Connection con = ((Conexion) _con).getCon();
-        	List<VONiño> lista = new ArrayList<VONiño>();
+	public List<VONiño> listarNiños(IConexion _con) throws PersistenciaException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
+			List<VONiño> lista = new ArrayList<VONiño>();
 			PreparedStatement statement = con.prepareStatement(consultas.listarNiños());
 			ResultSet response = statement.executeQuery();
-			while(response.next()) {				
+			while (response.next()) {
 				lista.add(new VONiño(response.getInt("cedula"), response.getString("nombre"), response.getString("apellido")));
 			}
 			return lista;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		}
-    }
+	}
 }

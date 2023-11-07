@@ -17,36 +17,36 @@ import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 
-public class ControladorListadoJuguetes{
+public class ControladorListadoJuguetes {
 	private IFachada cap;
-	
+
 	public ControladorListadoJuguetes(VentanaPrincipal vp) throws JuguetesException, FileNotFoundException, IOException, NotBoundException {
 		Properties p = new Properties();
 		String nomArch = "src/config/config.properties";
-		p.load (new FileInputStream (nomArch));
+		p.load(new FileInputStream(nomArch));
 		String ip = p.getProperty("ipServidor");
 		String puerto = p.getProperty("puertoServidor");
 		String ruta = "//" + ip + ":" + puerto + "/fachada";
-				
+
 		cap = (IFachada) Naming.lookup(ruta);
 	}
-	
-	public ArrayList<String []> ListadoJuguetes(int _cedula) throws JuguetesException, NiñosException, PersistenciaException, RemoteException, ConfigException {
-		ArrayList<String []> array = new ArrayList<String []>();
+
+	public ArrayList<String[]> ListadoJuguetes(int _cedula) throws JuguetesException, NiñosException, PersistenciaException, RemoteException, ConfigException {
+		ArrayList<String[]> array = new ArrayList<String[]>();
 		try {
 			ArrayList<VOJuguete> arr = cap.ListarJuguetes(_cedula);
-			for(VOJuguete v: arr) {
-				String [] data = new String[3];
+			for (VOJuguete v : arr) {
+				String[] data = new String[3];
 				Integer numero = v.getNumero();
 				Integer cedula = v.getCedulaNinio();
 				String descripcion = v.getDescripcion();
-				
+
 				data[0] = String.valueOf(numero);
 				data[1] = String.valueOf(cedula);
 				data[2] = descripcion;
 				array.add(data);
-			}	
-		} catch(JuguetesException je) {
+			}
+		} catch (JuguetesException je) {
 			throw je;
 		}
 		return array;

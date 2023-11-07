@@ -13,7 +13,6 @@ import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 
 public class ControladorBajaJuguetes {
-
 	private IFachada fachada;
 
 	public ControladorBajaJuguetes(VentanaPrincipal vp) throws Exception {
@@ -31,7 +30,7 @@ public class ControladorBajaJuguetes {
 		try {
 			VONiño von = new VONiño(_cedula, null, null);
 			fachada.BajaJuguetes(von);
-		} catch(NiñosException ne) {
+		} catch (NiñosException ne) {
 			throw ne;
 		}
 	}

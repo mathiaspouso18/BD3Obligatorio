@@ -22,15 +22,15 @@ public class ControladorBuscarDescripcion {
 		String ip = p.getProperty("ipServidor");
 		String puerto = p.getProperty("puertoServidor");
 		String ruta = "//" + ip + ":" + puerto + "/fachada";
-				
+
 		cap = (IFachada) Naming.lookup(ruta);
 	}
-	
+
 	public String BuscarDecripcion(int _cedula, int _numero) throws NiñosException, PersistenciaException, JuguetesException, RemoteException, ConfigException {
 		String descripcion = "";
 		try {
-			descripcion = cap.DarDescripcion(_cedula, _numero);	
-		} catch(JuguetesException je) {
+			descripcion = cap.DarDescripcion(_cedula, _numero);
+		} catch (JuguetesException je) {
 			throw je;
 		}
 		return descripcion;
