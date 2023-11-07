@@ -174,7 +174,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 
-	public static void actualizarNinios() {
+	public static void actualizarNinios() throws ConfigException {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 
 		model.getDataVector().removeAllElements();
@@ -589,7 +589,12 @@ public class VentanaPrincipal extends JFrame {
 		btnListarNiños.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				actualizarNinios();
+				try {
+					actualizarNinios();
+				} catch (ConfigException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnInsertarNinio.addActionListener(new ActionListener() {

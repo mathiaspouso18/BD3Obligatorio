@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import config.ConfigException;
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
 import logica.excepciones.NiñosException;
@@ -26,7 +27,7 @@ public class ControladorListadoNinios{
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 	
-	public ArrayList<String []> ListadoNinios() throws NiñosException, PersistenciaException, RemoteException {
+	public ArrayList<String []> ListadoNinios() throws NiñosException, PersistenciaException, RemoteException, ConfigException {
 		ArrayList<String []> array = new ArrayList<String []>();
 		try {
 			ArrayList<VONiño> arr = cap.ListarNiños();

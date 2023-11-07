@@ -16,6 +16,8 @@ import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 import persistencia.consultas.consultas;
+import persistencia.poolConexiones.Conexion;
+import persistencia.poolConexiones.IConexion;
 
 public class DAONiños {
     private String url;
@@ -29,39 +31,21 @@ public class DAONiños {
     	this.password = ConfigManager.getInstance().getProperty("password");
     }
     
-    private void crearCon() throws PersistenciaException {
+    public boolean member(IConexion _con, int cedula) throws PersistenciaException {
         try {
-        	con = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e) {
-			throw new PersistenciaException(1);
-		}
-    }
-    
-    private void cerrarCon() throws PersistenciaException {
-    	try {
-			con.close();
-		} catch (SQLException e) {
-			throw new PersistenciaException(2);
-		}
-    }
-
-    public boolean member(int cedula) throws PersistenciaException {
-        try {
-        	crearCon();
+         	Connection con = ((Conexion) _con).getCon();
 			PreparedStatement statement = con.prepareStatement(consultas.seleccionarNiño());
 			statement.setInt(1, cedula);
 			ResultSet response = statement.executeQuery();
 			return response.next();
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
-		} finally {
-			cerrarCon();
 		}
     }
 
-    public void insert(Niño niño) throws PersistenciaException {
+    public void insert(IConexion _con, Niño niño) throws PersistenciaException {
         try {
-        	crearCon();
+         	Connection con = ((Conexion) _con).getCon();
 			PreparedStatement statement = con.prepareStatement(consultas.insertarNiño());
 			statement.setInt(1, niño.getCedula());
 			statement.setString(2, niño.getNombre());
@@ -69,14 +53,12 @@ public class DAONiños {
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
-		} finally {
-			cerrarCon();
 		}
     }
 
-    public Niño find(int cedula) throws PersistenciaException, ConfigException {
+    public Niño find(IConexion _con, int cedula) throws PersistenciaException, ConfigException {
         try {
-        	crearCon();
+         	Connection con = ((Conexion) _con).getCon();
         	Niño n = null;
 			PreparedStatement statement = con.prepareStatement(consultas.seleccionarNiño());
 			statement.setInt(1, cedula);
@@ -87,27 +69,23 @@ public class DAONiños {
 			return n;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
-		} finally {
-			cerrarCon();
 		}
     }
 
-    public void delete(int cedula) throws PersistenciaException {
+    public void delete(IConexion _con, int cedula) throws PersistenciaException {
         try {
-        	crearCon();
+         	Connection con = ((Conexion) _con).getCon();
 			PreparedStatement statement = con.prepareStatement(consultas.borrarNiño());
 			statement.setInt(1, cedula);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
-		} finally {
-			cerrarCon();
 		}
     }
 
-    public List<VONiño> listarNiños() throws PersistenciaException {
+    public List<VONiño> listarNiños(IConexion _con) throws PersistenciaException {
         try {
-        	crearCon();
+         	Connection con = ((Conexion) _con).getCon();
         	List<VONiño> lista = new ArrayList<VONiño>();
 			PreparedStatement statement = con.prepareStatement(consultas.listarNiños());
 			ResultSet response = statement.executeQuery();
@@ -117,8 +95,6 @@ public class DAONiños {
 			return lista;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
-		} finally {
-			cerrarCon();
 		}
     }
 }

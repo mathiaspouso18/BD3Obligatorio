@@ -14,45 +14,31 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import logica.Juguete;
 import logica.Niño;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 import persistencia.consultas.consultas;
+import persistencia.poolConexiones.Conexion;
+import persistencia.poolConexiones.IConexion;
 
 public class DAOJuguetes {
-    private int cedulaNiño;
-    private String url;
-    private String user;
-    private String password;
-    Connection con;
-    
-    public DAOJuguetes(int cedula) throws ConfigException {
-    	this.cedulaNiño = cedula;
-    	this.url = ConfigManager.getInstance().getProperty("url");
-    	this.user = ConfigManager.getInstance().getProperty("user");
-    	this.password = ConfigManager.getInstance().getProperty("password");
-    }
-    
-    private void crearCon() throws PersistenciaException {
-        try {
-        	con = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e) {
-			throw new PersistenciaException(1);
-		}
-    }
-    
-    private void cerrarCon() throws PersistenciaException {
-    	try {
-			con.close();
-		} catch (SQLException e) {
-			throw new PersistenciaException(2);
-		}
-    }
+	private int cedulaNiño;
+	private String url;
+	private String user;
+	private String password;
 
-    public void insback(Juguete juguete) throws PersistenciaException {
-        try {
-        	crearCon();
+	public DAOJuguetes(int cedula) throws ConfigException {
+		this.cedulaNiño = cedula;
+		this.url = ConfigManager.getInstance().getProperty("url");
+		this.user = ConfigManager.getInstance().getProperty("user");
+		this.password = ConfigManager.getInstance().getProperty("password");
+	}
+
+	public void insback(IConexion _con, Juguete juguete) throws PersistenciaException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
 			PreparedStatement statement = con.prepareStatement(consultas.insertarJuguete());
 			statement.setInt(1, juguete.getNumero());
 			statement.setString(2, juguete.getDescripcion());
@@ -60,76 +46,66 @@ public class DAOJuguetes {
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
-		} finally {
-			cerrarCon();
 		}
-    }
+	}
 
-    public int largo() throws PersistenciaException {
-        try {
-        	int largo = 0;
-        	crearCon();
+	public int largo(IConexion _con) throws PersistenciaException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
+			int largo = 0;
 			PreparedStatement statement = con.prepareStatement(consultas.cantidadDeJuguetes());
 			statement.setInt(1, this.cedulaNiño);
 			ResultSet response = statement.executeQuery();
-			if(response.next()) {
+			if (response.next()) {
 				largo = response.getInt("cantidad");
 			}
 			return largo;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
-		} finally {
-			cerrarCon();
 		}
-    }
+	}
 
-    public Juguete k_esimo(int k) throws PersistenciaException {
-        try {
-        	crearCon();
-        	Juguete j = null;
+	public Juguete k_esimo(IConexion _con, int k) throws PersistenciaException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
+			Juguete j = null;
 			PreparedStatement statement = con.prepareStatement(consultas.k_esimoJuguete());
 			statement.setInt(1, this.cedulaNiño);
 			statement.setInt(2, k);
 			ResultSet response = statement.executeQuery();
-			if(response.next()) {				
- 				j = new Juguete(response.getInt("numero"), response.getString("descripcion"));
- 			}
+			if (response.next()) {
+				j = new Juguete(response.getInt("numero"), response.getString("descripcion"));
+			}
 			return j;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
-		} finally {
-			cerrarCon();
 		}
-    }
+	}
 
-    public ArrayList<VOJuguete> listarJuguetes() throws PersistenciaException {
-    	 try {
-    		crearCon();
-    		ArrayList<VOJuguete> lista = new ArrayList<VOJuguete>();
- 			PreparedStatement statement = con.prepareStatement(consultas.listarJuguetes());
- 			statement.setInt(1, this.cedulaNiño);
- 			ResultSet response = statement.executeQuery();
- 			while(response.next()) {				
- 				lista.add(new VOJuguete(response.getInt("numero"), response.getString("descripcion"), this.cedulaNiño));
- 			}
- 			return lista;
- 		} catch (SQLException e) {
- 			throw new PersistenciaException(3);
- 		} finally {
- 			cerrarCon();
- 		}
-    }
+	public ArrayList<VOJuguete> listarJuguetes(IConexion _con) throws PersistenciaException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
+			ArrayList<VOJuguete> lista = new ArrayList<VOJuguete>();
+			PreparedStatement statement = con.prepareStatement(consultas.listarJuguetes());
+			statement.setInt(1, this.cedulaNiño);
+			ResultSet response = statement.executeQuery();
+			while (response.next()) {
+				lista.add(new VOJuguete(response.getInt("numero"), response.getString("descripcion"), this.cedulaNiño));
+			}
+			return lista;
+		} catch (SQLException e) {
+			throw new PersistenciaException(3);
+		}
+	}
 
-    public void borrarJuguetes() throws PersistenciaException {
-        try {
-        	crearCon();
+	public void borrarJuguetes(IConexion _con) throws PersistenciaException {
+		try {
+			Connection con = ((Conexion) _con).getCon();
 			PreparedStatement statement = con.prepareStatement(consultas.borrarJuguetes());
 			statement.setInt(1, this.cedulaNiño);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
-		} finally {
-			cerrarCon();
 		}
-    }
+	}
 }
