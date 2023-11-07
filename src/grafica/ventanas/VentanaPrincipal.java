@@ -118,6 +118,8 @@ public class VentanaPrincipal extends JFrame {
 				modelJuguetes.getDataVector().removeAllElements();
 				modelJuguetes.fireTableDataChanged();
 				actualizarJuguetes(cedula);
+				lblErrorJuguete2.setForeground(Color.GREEN);
+				lblErrorJuguete2.setText("Juguetes borrados exitosamente");
 			} catch (NiñosException ne) {
 				lblErrorJuguete2.setForeground(Color.RED);
 				lblErrorJuguete2.setText(ne.getMensajeNiñosExcep());
@@ -319,7 +321,7 @@ public class VentanaPrincipal extends JFrame {
 				borrarJuguetes(txtCedula4.getText());
 			}
 		});
-		btnBorrarJuguetes.setBounds(442, 83, 135, 23);
+		btnBorrarJuguetes.setBounds(442, 74, 135, 23);
 		pnlListadoJuguetes.add(btnBorrarJuguetes);
 
 		JPanel panel = new JPanel();
