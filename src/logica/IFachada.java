@@ -18,6 +18,5 @@ public interface IFachada extends Remote {
 	public ArrayList<VONiño> ListarNiños() throws NiñosException, PersistenciaException, RemoteException;
 	public ArrayList<VOJuguete> ListarJuguetes(int _ced) throws NiñosException, PersistenciaException, JuguetesException, RemoteException, ConfigException ;
 	public String DarDescripcion(int _ced, int _num) throws NiñosException, PersistenciaException, JuguetesException, RemoteException, ConfigException;
+	public void BajaJuguetes(VONiño niño) throws NiñosException, PersistenciaException, RemoteException, ConfigException;
 }
-
-
