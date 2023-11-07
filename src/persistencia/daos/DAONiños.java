@@ -18,8 +18,6 @@ import persistencia.poolConexiones.IConexion;
 public class DAONiños {
 	Connection con;
 
-	public DAONiños() { }
-
 	public boolean member(IConexion _con, int cedula) throws PersistenciaException {
 		try {
 			Connection con = ((Conexion) _con).getCon();

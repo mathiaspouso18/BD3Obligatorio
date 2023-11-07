@@ -2,7 +2,6 @@ package logica;
 
 import java.util.ArrayList;
 
-import config.ConfigException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 import persistencia.daos.DAOJuguetes;
@@ -14,7 +13,7 @@ public class Niño {
     private String apellido;
     private DAOJuguetes secuencia;
 
-    public Niño(int cedula, String nombre, String apellido) throws ConfigException {
+    public Niño(int cedula, String nombre, String apellido) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;

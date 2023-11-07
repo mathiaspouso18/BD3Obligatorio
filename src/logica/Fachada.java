@@ -35,7 +35,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		return instance;
 	}
 	
-	public Fachada() throws ClassNotFoundException, IOException, ConfigException {
+	public Fachada() throws ClassNotFoundException, IOException {
 		daoNiños = new DAONiños();
 	}
 	
