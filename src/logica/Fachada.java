@@ -1,6 +1,7 @@
 package logica;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -60,28 +61,21 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 	public void AltaJuguete(VOJuguete juguete) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
 		int _ced = juguete.getCedulaNinio();
-		int _ultimoJuguete = 0;
-		String _descripcion = juguete.getDescripcion();
-
 		IConexion icon = pool.obtenerConexion(false);
 		try {
-			if (daoNiños.member(icon, _ced)) {
-				Niño n = daoNiños.find(icon, _ced);
-
-				List<VOJuguete> juguetes = n.listarJuguetes(icon);
-				_ultimoJuguete = juguetes.size() + 1;
-
-				Juguete jug = new Juguete(_ultimoJuguete, _descripcion);
-
-				n.addJuguete(icon, jug);
-			} else {
+			if (!daoNiños.member(icon, _ced)) {
+				pool.liberarConexion(icon, false);
 				throw new NiñosException(2);
 			}
+			Niño n = daoNiños.find(icon, _ced);
+			List<VOJuguete> juguetes = n.listarJuguetes(icon);
+			Juguete jug = new Juguete(juguetes.size() + 1, juguete.getDescripcion());
+			n.addJuguete(icon, jug);
+			pool.liberarConexion(icon, true);
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, false);
 			throw e;
 		}
-		pool.liberarConexion(icon, true);
 	}
 
 	public void BajaNiño(VONiño niño) throws NiñosException, PersistenciaException, ConfigException {
@@ -110,20 +104,18 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		IConexion icon = pool.obtenerConexion(false);
 		try {
 			List<VONiño> lsta = daoNiños.listarNiños(icon);
-			listNiños = new ArrayList<>();
-			if (!lsta.isEmpty()) {
-				Iterator<VONiño> iterador = lsta.iterator();
-				while (iterador.hasNext()) {
-					VONiño n = iterador.next();
-					VONiño von = new VONiño(n.getCedula(), n.getNombre(), n.getApellido());
-					listNiños.add(von);
-				}
-				pool.liberarConexion(icon, true);
-				return listNiños;
-			} else {
-				pool.liberarConexion(icon, true);
+			pool.liberarConexion(icon, true);
+			if (lsta.isEmpty()) {
 				throw new NiñosException(3);
 			}
+			listNiños = new ArrayList<>();
+			Iterator<VONiño> iterador = lsta.iterator();
+			while (iterador.hasNext()) {
+				VONiño n = iterador.next();
+				VONiño von = new VONiño(n.getCedula(), n.getNombre(), n.getApellido());
+				listNiños.add(von);
+			}
+			return listNiños;
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, false);
 			throw e;
@@ -174,7 +166,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 	}
 
-	public void BajaJuguetes(VONiño _niño) throws NiñosException, PersistenciaException, ConfigException, JuguetesException {
+	public void BajaJuguetes(VONiño _niño) throws NiñosException, PersistenciaException, ConfigException, RemoteException, JuguetesException {
 		int _cedula = _niño.getCedula();
 		IConexion icon = pool.obtenerConexion(false);
 		try {
@@ -183,13 +175,12 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				throw new NiñosException(2);
 			}
 			Niño niño = daoNiños.find(icon, _cedula);
-			if (niño.cantidadJuguetes(icon) != 0) {
-				pool.liberarConexion(icon, true);
-				niño.borrarJuguetes(icon);
-			} else {
-				pool.liberarConexion(icon, true);
+			if (niño.cantidadJuguetes(icon) == 0) {
+				pool.liberarConexion(icon, false);
 				throw new JuguetesException(3);
 			}
+			niño.borrarJuguetes(icon);
+			pool.liberarConexion(icon, true);
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, false);
 			throw e;

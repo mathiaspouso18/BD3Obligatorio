@@ -24,5 +24,5 @@ public interface IFachada extends Remote {
 
 	public String DarDescripcion(int _ced, int _num) throws NiñosException, PersistenciaException, JuguetesException, RemoteException, ConfigException;
 
-	public void BajaJuguetes(VONiño niño) throws NiñosException, PersistenciaException, RemoteException, ConfigException, JuguetesException;
+	public void BajaJuguetes(VONiño niño) throws NiñosException, PersistenciaException, ConfigException, RemoteException, JuguetesException;
 }

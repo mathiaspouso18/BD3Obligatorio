@@ -117,12 +117,15 @@ public class VentanaPrincipal extends JFrame {
 				lblErrorJuguete2.setText(ne.getMensajeNiñosExcep());
 			} catch (PersistenciaException e1) {
 				e1.printStackTrace();
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			} catch (ConfigException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			} catch (JuguetesException je) {
+				lblErrorJuguete2.setForeground(Color.RED);
+				lblErrorJuguete2.setText(je.getMensajeJuguetesExcep());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		} else {
 			lblErrorJuguete2.setText("Debe ingresar la cedula del niño");
