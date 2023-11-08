@@ -19,7 +19,8 @@ public class PoolConexiones implements IPoolConexiones {
 
 	public PoolConexiones() {
 		nivelTransaccionalidad = Connection.TRANSACTION_SERIALIZABLE;
-		conexiones = new Conexion[3];
+		tamanio = 3;
+		conexiones = new Conexion[tamanio];
 		tope = -1;
 		creadas = 0;
 		try {
@@ -41,7 +42,7 @@ public class PoolConexiones implements IPoolConexiones {
 	public IConexion obtenerConexion(boolean modifica) throws PersistenciaException, ConfigException {
 		try {
 			synchronized (this) {
-				if (tope >= 0) {//Tengo conexiones disponibles
+				if (tope >= 0) {//Tengo conexiones disponibles		
 					tope--;
 					return comenzarTransaccion(conexiones[tope + 1]);
 				} else if (creadas < tamanio) {//Puedo crear conexiones
@@ -75,7 +76,6 @@ public class PoolConexiones implements IPoolConexiones {
 				throw new PersistenciaException(4);
 			}
 		}
-
 	}
 
 	private Conexion comenzarTransaccion(Conexion conexion) throws PersistenciaException {

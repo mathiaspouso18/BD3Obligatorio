@@ -165,13 +165,10 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 
-
 	public static void actualizarNinios() throws ConfigException {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
-
 		model.getDataVector().removeAllElements();
 		model.fireTableDataChanged();
-
 		try {
 			datos = cln.ListadoNinios();
 			for (String[] d : datos) {

@@ -29,13 +29,13 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 	public static Fachada getInstance() throws ClassNotFoundException, IOException, PersistenciaException, ConfigException {
 		if (instance == null) {
-			pool = new PoolConexiones();
 			instance = new Fachada();
 		}
 		return instance;
 	}
 
 	public Fachada() throws ClassNotFoundException, IOException {
+		pool = new PoolConexiones();
 		daoNiños = new DAONiños();
 	}
 
@@ -86,7 +86,6 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 	public void BajaNiño(VONiño niño) throws NiñosException, PersistenciaException, ConfigException {
 		int _cedula = niño.getCedula();
-
 		IConexion icon = pool.obtenerConexion(false);
 		try {
 			if (daoNiños.member(icon, _cedula)) {
@@ -121,6 +120,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				pool.liberarConexion(icon, true);
 				return listNiños;
 			} else {
+				pool.liberarConexion(icon, true);
 				throw new NiñosException(3);
 			}
 		} catch (PersistenciaException e) {
@@ -137,9 +137,11 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				Niño n = daoNiños.find(icon, _ced);
 				listJuguetes = n.listarJuguetes(icon);
 				if (listJuguetes.isEmpty()) {
+					pool.liberarConexion(icon, false);
 					throw new JuguetesException(3);
 				}
 			} else {
+				pool.liberarConexion(icon, false);
 				throw new NiñosException(2);
 			}
 		} catch (PersistenciaException e) {
