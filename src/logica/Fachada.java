@@ -1,7 +1,6 @@
 package logica;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,9 +14,7 @@ import logica.valueObjects.VOJuguete;
 import logica.valueObjects.VONiño;
 import persistencia.poolConexiones.IConexion;
 import persistencia.poolConexiones.IPoolConexiones;
-import persistencia.poolConexiones.PoolConexionesSQL;
 import persistencia.daos.IDAONiños;
-import persistencia.daos.FabricaAbstracta;
 import persistencia.daos.FabricaUtil;
 
 public class Fachada extends UnicastRemoteObject implements IFachada {
@@ -50,14 +47,15 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				String ape = niño.getApellido();
 				Niño n = new Niño(_cedula, nom, ape);
 				daoNiños.insert(icon, n);
+				pool.liberarConexion(icon, true);
 			} else {
+				pool.liberarConexion(icon, false);
 				throw new NiñosException(1);
 			}
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, false);
 			throw e;
 		}
-		pool.liberarConexion(icon, true);
 	}
 
 	public void AltaJuguete(VOJuguete juguete) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
@@ -96,14 +94,15 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 					n.borrarJuguetes(icon);
 				}
 				daoNiños.delete(icon, _cedula);
+				pool.liberarConexion(icon, true);
 			} else {
+				pool.liberarConexion(icon, false);
 				throw new NiñosException(2);
 			}
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, false);
 			throw e;
 		}
-		pool.liberarConexion(icon, true);
 	}
 
 	public ArrayList<VONiño> ListarNiños() throws NiñosException, PersistenciaException, ConfigException {
@@ -155,45 +154,45 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	}
 
 	public String DarDescripcion(int _ced, int _num) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
-		String retorno = "";
 		IConexion icon = pool.obtenerConexion(false);
 		try {
-			if (daoNiños.member(icon, _ced)) {
-				Niño n = daoNiños.find(icon, _ced);
-				boolean tieneJuguete = n.tieneJuguete(icon, _num);
-				if (tieneJuguete) {
-					Juguete j = n.obtenerJuguete(icon, _num);
-					retorno = j.getDescripcion();
-				} else {
-					throw new JuguetesException(4);
-				}
-			} else {
+			if (!daoNiños.member(icon, _ced)) {
+				pool.liberarConexion(icon, true);
 				throw new NiñosException(2);
 			}
+			Niño niño = daoNiños.find(icon, _ced);
+			if (!niño.tieneJuguete(icon, _num)) {
+				pool.liberarConexion(icon, true);
+				throw new JuguetesException(4);
+			}
+			Juguete juguete = niño.obtenerJuguete(icon, _num);
+			pool.liberarConexion(icon, true);
+			return juguete.getDescripcion();
 		} catch (PersistenciaException e) {
-			pool.liberarConexion(icon, false);
+			pool.liberarConexion(icon, true);
 			throw e;
 		}
-		pool.liberarConexion(icon, true);
-		return retorno;
 	}
 
-	public void BajaJuguetes(VONiño niño) throws NiñosException, PersistenciaException, RemoteException, ConfigException {
-		int _cedula = niño.getCedula();
+	public void BajaJuguetes(VONiño _niño) throws NiñosException, PersistenciaException, ConfigException, JuguetesException {
+		int _cedula = _niño.getCedula();
 		IConexion icon = pool.obtenerConexion(false);
 		try {
-			if (daoNiños.member(icon, _cedula)) {
-				Niño n = daoNiños.find(icon, _cedula);
-				if (n.cantidadJuguetes(icon) != 0) {
-					n.borrarJuguetes(icon);
-				}
-			} else {
+			if (!daoNiños.member(icon, _cedula)) {
+				pool.liberarConexion(icon, false);
 				throw new NiñosException(2);
+			}
+			Niño niño = daoNiños.find(icon, _cedula);
+			if (niño.cantidadJuguetes(icon) != 0) {
+				pool.liberarConexion(icon, true);
+				niño.borrarJuguetes(icon);
+			} else {
+				pool.liberarConexion(icon, true);
+				throw new JuguetesException(3);
 			}
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, false);
 			throw e;
 		}
-		pool.liberarConexion(icon, true);
 	}
 }

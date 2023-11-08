@@ -4,7 +4,7 @@ import config.ConfigException;
 import persistencia.poolConexiones.IPoolConexiones;
 import persistencia.poolConexiones.PoolConexionesSQL;
 
-public class FabricaSQL implements FabricaAbstracta {
+public class FabricaMySQL implements FabricaAbstracta {
 	@Override
 	public IDAOJuguetes crearDAOJuguetes(int cedula) throws ConfigException{
 		return new DAOJuguetes(cedula);
