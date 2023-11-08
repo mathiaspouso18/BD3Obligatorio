@@ -15,7 +15,9 @@ import logica.valueObjects.VOJuguete;
 import logica.valueObjects.VONiño;
 import persistencia.poolConexiones.IConexion;
 import persistencia.poolConexiones.IPoolConexiones;
+import persistencia.poolConexiones.PoolConexionesSQL;
 import persistencia.daos.IDAONiños;
+import persistencia.daos.FabricaAbstracta;
 import persistencia.daos.FabricaUtil;
 
 public class Fachada extends UnicastRemoteObject implements IFachada {
@@ -35,6 +37,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	}
 	
 	public Fachada() throws ClassNotFoundException, IOException, ConfigException {
+		pool = FabricaUtil.buildFabrica().crearPool();
 		daoNiños = FabricaUtil.buildFabrica().crearDAONiños();
 	}
 

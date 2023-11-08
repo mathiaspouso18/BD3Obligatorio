@@ -8,8 +8,8 @@ import config.ConfigException;
 import config.ConfigManager;
 import logica.excepciones.PersistenciaException;
 
-public class PoolConexiones implements IPoolConexiones {
-	private static PoolConexiones instancia;
+public class PoolConexionesSQL implements IPoolConexiones {
+	private static PoolConexionesSQL instancia;
 
 	private int nivelTransaccionalidad;
 	private Conexion conexiones[];
@@ -17,7 +17,7 @@ public class PoolConexiones implements IPoolConexiones {
 	private int creadas;
 	private int tope;
 
-	public PoolConexiones() {
+	public PoolConexionesSQL() {
 		nivelTransaccionalidad = Connection.TRANSACTION_SERIALIZABLE;
 		tamanio = 3;
 		conexiones = new Conexion[tamanio];
@@ -31,9 +31,9 @@ public class PoolConexiones implements IPoolConexiones {
 
 	}
 
-	public static PoolConexiones getInstancia() {
+	public static PoolConexionesSQL getInstancia() {
 		if (instancia == null) {
-			instancia = new PoolConexiones();
+			instancia = new PoolConexionesSQL();
 		}
 		return instancia;
 	}
