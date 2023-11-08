@@ -14,13 +14,12 @@ import persistencia.consultas.consultas;
 import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
-public class DAOJuguetes {
-	private int cedulaNiño;
-
-	public DAOJuguetes(int cedula) {
-		this.cedulaNiño = cedula;
+public class DAOJuguetes extends IDAOJuguetes{
+	
+    public DAOJuguetes(int cedula) {
+		super(cedula);
 	}
-
+    
 	public void insback(IConexion _con, Juguete juguete) throws PersistenciaException {
 		try {
 			Connection con = ((Conexion) _con).getCon();

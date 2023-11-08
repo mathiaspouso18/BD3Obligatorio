@@ -13,16 +13,16 @@ import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 import logica.valueObjects.VONiño;
-import persistencia.daos.DAONiños;
 import persistencia.poolConexiones.IConexion;
 import persistencia.poolConexiones.IPoolConexiones;
-import persistencia.poolConexiones.PoolConexiones;
+import persistencia.daos.IDAONiños;
+import persistencia.daos.FabricaUtil;
 
 public class Fachada extends UnicastRemoteObject implements IFachada {
 	private static final long serialVersionUID = 1L;
 
-	private DAONiños daoNiños;
-
+	private IDAONiños daoNiños;
+	
 	private static Fachada instance = null;
 
 	private static IPoolConexiones pool;
@@ -33,10 +33,9 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 		return instance;
 	}
-
-	public Fachada() throws ClassNotFoundException, IOException {
-		pool = new PoolConexiones();
-		daoNiños = new DAONiños();
+	
+	public Fachada() throws ClassNotFoundException, IOException, ConfigException {
+		daoNiños = FabricaUtil.buildFabrica().crearDAONiños();
 	}
 
 	public void AltaNiño(VONiño niño) throws PersistenciaException, NiñosException, ConfigException {

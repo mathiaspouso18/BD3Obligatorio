@@ -2,23 +2,25 @@ package logica;
 
 import java.util.ArrayList;
 
+import config.ConfigException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
-import persistencia.daos.DAOJuguetes;
+import persistencia.daos.FabricaUtil;
+import persistencia.daos.IDAOJuguetes;
 import persistencia.poolConexiones.IConexion;
 
 public class Niño {
-	private int cedula;
-	private String nombre;
-	private String apellido;
-	private DAOJuguetes secuencia;
+    private int cedula;
+    private String nombre;
+    private String apellido;
+    private IDAOJuguetes secuencia;
 
-	public Niño(int cedula, String nombre, String apellido) {
-		this.cedula = cedula;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.secuencia = new DAOJuguetes(cedula);
-	}
+    public Niño(int cedula, String nombre, String apellido) throws ConfigException {
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.secuencia = FabricaUtil.buildFabrica().crearDAOJuguetes(cedula);
+    }
 
 	public int getCedula() {
 		return cedula;

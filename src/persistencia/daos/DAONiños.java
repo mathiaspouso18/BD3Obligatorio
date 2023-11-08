@@ -15,8 +15,7 @@ import persistencia.consultas.consultas;
 import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
-public class DAONiños {
-	Connection con;
+public class DAONiños extends IDAONiños {
 
 	public boolean member(IConexion _con, int cedula) throws PersistenciaException {
 		try {
