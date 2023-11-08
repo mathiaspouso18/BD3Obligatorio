@@ -5,25 +5,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import config.ConfigException;
-import config.ConfigManager;
 
 import logica.Juguete;
-import logica.Niño;
-import logica.excepciones.JuguetesException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
-import persistencia.consultas.consultas;
 
 public class DAOJuguetesArchivo {
 	//Formato del archivo juguetes: numero=1,descripcion=Autito;numero=2,descripcion=Muñeca
