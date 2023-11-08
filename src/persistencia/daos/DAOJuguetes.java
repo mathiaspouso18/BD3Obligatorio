@@ -20,7 +20,7 @@ import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 import persistencia.consultas.consultas;
 
-public class DAOJuguetes {
+public class DAOJuguetes extends IDAOJuguetes{
     private int cedulaNiño;
     private String url;
     private String user;
@@ -28,7 +28,7 @@ public class DAOJuguetes {
     Connection con;
     
     public DAOJuguetes(int cedula) throws ConfigException {
-    	this.cedulaNiño = cedula;
+    	super(cedula);
     	this.url = ConfigManager.getInstance().getProperty("url");
     	this.user = ConfigManager.getInstance().getProperty("user");
     	this.password = ConfigManager.getInstance().getProperty("password");

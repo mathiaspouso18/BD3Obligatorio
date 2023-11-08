@@ -6,18 +6,20 @@ import config.ConfigException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
 import persistencia.daos.DAOJuguetes;
+import persistencia.daos.FabricaUtil;
+import persistencia.daos.IDAOJuguetes;
 
 public class Niño {
     private int cedula;
     private String nombre;
     private String apellido;
-    private DAOJuguetes secuencia;
+    private IDAOJuguetes secuencia;
 
     public Niño(int cedula, String nombre, String apellido) throws ConfigException {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.secuencia = new DAOJuguetes(cedula);
+        this.secuencia = FabricaUtil.buildFabrica().crearDAOJuguetes(cedula);
     }
 
     public int getCedula() {

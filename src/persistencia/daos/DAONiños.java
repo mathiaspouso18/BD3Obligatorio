@@ -17,7 +17,7 @@ import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 import persistencia.consultas.consultas;
 
-public class DAONiños {
+public class DAONiños extends IDAONiños{
     private String url;
     private String user;
     private String password;
