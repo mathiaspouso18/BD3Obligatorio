@@ -20,7 +20,6 @@ import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
 
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.GridLayout;
@@ -35,15 +34,8 @@ import java.awt.Color;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
 
 public class VentanaPrincipal extends JFrame {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static JTextField txtCedula;
@@ -173,13 +165,10 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 
-
-	public static void actualizarNinios() {
+	public static void actualizarNinios() throws ConfigException {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
-
 		model.getDataVector().removeAllElements();
 		model.fireTableDataChanged();
-
 		try {
 			datos = cln.ListadoNinios();
 			for (String[] d : datos) {
@@ -589,7 +578,12 @@ public class VentanaPrincipal extends JFrame {
 		btnListarNiños.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				actualizarNinios();
+				try {
+					actualizarNinios();
+				} catch (ConfigException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnInsertarNinio.addActionListener(new ActionListener() {

@@ -10,21 +10,19 @@ public class PersistenciaException extends Exception {
 
 	public String getMensajePersistenciaExcep() {
 		String mensaje = "";
-
 		switch (codigoError) {
-		case 1:
-			mensaje = "Error al generar la conexión";
-			break;
-		case 2:
-			mensaje = "Error al cerrar la conexión";
-			break;
-		case 3:
-			mensaje = "Error al ejecutando la sentencia";
-			break;
-		default:
-			mensaje = "Error no especificado";
+			case 1:
+				mensaje = "Error al generar la conexión";
+				break;
+			case 2:
+				mensaje = "Error al cerrar la conexión";
+				break;
+			case 3:
+				mensaje = "Error al ejecutando la sentencia";
+				break;
+			default:
+				mensaje = "Error no especificado";
 		}
-
 		return mensaje;
 	}
 }

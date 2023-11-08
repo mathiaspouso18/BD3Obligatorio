@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import config.ConfigException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
-import persistencia.daos.DAOJuguetes;
 import persistencia.daos.FabricaUtil;
 import persistencia.daos.IDAOJuguetes;
+import persistencia.poolConexiones.IConexion;
 
 public class Niño {
     private int cedula;
@@ -22,39 +22,39 @@ public class Niño {
         this.secuencia = FabricaUtil.buildFabrica().crearDAOJuguetes(cedula);
     }
 
-    public int getCedula() {
-        return cedula;
-    }
+	public int getCedula() {
+		return cedula;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getApellido() {
-        return apellido;
-    }
+	public String getApellido() {
+		return apellido;
+	}
 
-    public boolean tieneJuguete(int numero) throws PersistenciaException {
-    	return secuencia.k_esimo(numero) != null;
-    }
-    
-    public int cantidadJuguetes() throws PersistenciaException {
-    	return secuencia.largo();
-    }
+	public boolean tieneJuguete(IConexion con, int numero) throws PersistenciaException {
+		return secuencia.k_esimo(con, numero) != null;
+	}
 
-    public void addJuguete(Juguete juguete) throws PersistenciaException {
-        secuencia.insback(juguete);
-    }
+	public int cantidadJuguetes(IConexion con) throws PersistenciaException {
+		return secuencia.largo(con);
+	}
 
-    public Juguete obtenerJuguete(int num) throws PersistenciaException {
-    	return secuencia.k_esimo(num);
-    }
+	public void addJuguete(IConexion con, Juguete juguete) throws PersistenciaException {
+		secuencia.insback(con, juguete);
+	}
 
-    public ArrayList<VOJuguete> listarJuguetes() throws PersistenciaException {
-    	return secuencia.listarJuguetes();
-    }
+	public Juguete obtenerJuguete(IConexion con, int num) throws PersistenciaException {
+		return secuencia.k_esimo(con, num);
+	}
 
-    public void borrarJuguetes() throws PersistenciaException {
-        secuencia.borrarJuguetes();
-    }
+	public ArrayList<VOJuguete> listarJuguetes(IConexion con) throws PersistenciaException {
+		return secuencia.listarJuguetes(con);
+	}
+
+	public void borrarJuguetes(IConexion con) throws PersistenciaException {
+		secuencia.borrarJuguetes(con);
+	}
 }

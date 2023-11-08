@@ -1,6 +1,7 @@
 package persistencia.daos;
 
 import config.ConfigException;
+import persistencia.poolConexiones.IPoolConexiones;
 
 public interface FabricaAbstracta {
 	
@@ -8,4 +9,5 @@ public interface FabricaAbstracta {
 	
 	IDAONiños crearDAONiños() throws ConfigException;
 
+	IPoolConexiones crearPool();
 }

@@ -13,25 +13,24 @@ import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 
 public class ControladorBajaJuguetes {
-
 	private IFachada fachada;
+
 	public ControladorBajaJuguetes(VentanaPrincipal vp) throws Exception {
-		
 		Properties p = new Properties();
 		String nomArch = "src/config/config.properties";
-		p.load (new FileInputStream (nomArch));
+		p.load(new FileInputStream(nomArch));
 		String ip = p.getProperty("ipServidor");
 		String puerto = p.getProperty("puertoServidor");
 		String ruta = "//" + ip + ":" + puerto + "/fachada";
-				
+
 		fachada = (IFachada) Naming.lookup(ruta);
 	}
-	
+
 	public void BajarJuguetes(int _cedula) throws NiñosException, PersistenciaException, RemoteException, ConfigException {
 		try {
 			VONiño von = new VONiño(_cedula, null, null);
 			fachada.BajaJuguetes(von);
-		} catch(NiñosException ne) {
+		} catch (NiñosException ne) {
 			throw ne;
 		}
 	}
