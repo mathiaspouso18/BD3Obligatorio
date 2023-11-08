@@ -2,12 +2,12 @@ package persistencia.daos;
 
 public class FabricaUtil {
 	public static FabricaAbstracta buildFabrica(){
-        String nombreFabrica = FabricaMySQL.class.toString();//Esto hay que tomarlo de un archivo de configuración
+        String nombreFabrica = "persistencia.daos.FabricaArchivos";//Esto hay que tomarlo de un archivo de configuración
         FabricaAbstracta fab = null;
         
         try {
-//        	fab = (FabricaAbstracta) Class.forName(nombreFabrica).getConstructor().newInstance();
-        	fab = new FabricaMySQL();
+        	fab = (FabricaAbstracta) Class.forName(nombreFabrica).getConstructor().newInstance();
+        	//fab = new FabricaMySQL();
         } catch(Exception e) {
         	e.printStackTrace();
         }

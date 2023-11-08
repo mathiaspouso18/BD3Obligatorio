@@ -19,7 +19,7 @@ import logica.Niño;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 
-public class DAONiñosArchivo {
+public class DAONiñosArchivo extends IDAONiñosArchivo {
 	private String carpeta = "ruta_de_la_carpeta";
 	
 	private String generarRutaArchivo (int cedula) {
@@ -104,8 +104,8 @@ public class DAONiñosArchivo {
 		archivoJuguetes.delete();
     }
 
-    public List<VONiño> listarNiños() throws PersistenciaException, NumberFormatException, IOException {
-        List<VONiño> lista = new ArrayList<VONiño>();
+    public ArrayList<VONiño> listarNiños() throws PersistenciaException {
+    	ArrayList<VONiño> lista = new ArrayList<VONiño>();
 		File dir = new File(carpeta);
 
 		// Filtro que determina si el nombre del archivo comienza con "niño" y es un archivo (no una carpeta)

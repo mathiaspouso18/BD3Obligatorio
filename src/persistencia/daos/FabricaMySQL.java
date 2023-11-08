@@ -17,5 +17,17 @@ public class FabricaMySQL implements FabricaAbstracta {
 	
 	public IPoolConexiones crearPool() {
 		return new PoolConexionesSQL();
+	}
+
+	@Override
+	public IDAOJuguetesArchivo crearDAOJuguetesArchivo(int cedula) throws ConfigException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public IDAONiñosArchivo crearDAONiñosArchivo() throws ConfigException {
+		// TODO Auto-generated method stub
+		return null;
 	};
 }

@@ -15,11 +15,16 @@ import config.ConfigException;
 import logica.Juguete;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
+import persistencia.poolConexiones.IConexion;
 
-public class DAOJuguetesArchivo {
+public class DAOJuguetesArchivo extends IDAOJuguetesArchivo  {
 	//Formato del archivo juguetes: numero=1,descripcion=Autito;numero=2,descripcion=Muñeca
     private int cedulaNiño;
     private String carpeta = "ruta_de_la_carpeta";
+    
+    public DAOJuguetesArchivo(int cedula) {
+    	super(cedula);
+    }
     
     private String generarRutaArchivo (int cedula) {
 		return carpeta + "juguetes-" + Integer.toString(cedula) + ".txt";
@@ -50,10 +55,6 @@ public class DAOJuguetesArchivo {
             e.printStackTrace();
         }
         return list;
-    }
-    
-    public DAOJuguetesArchivo(int cedula) throws ConfigException {
-    	this.cedulaNiño = cedula;
     }
 
     public void insback(Juguete juguete) throws PersistenciaException {
