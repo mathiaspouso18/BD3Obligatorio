@@ -34,19 +34,19 @@ public class DAOJuguetes extends IDAOJuguetes{
 	}
 
 	public int largo(IConexion _con) throws PersistenciaException {
+		int largo = 0;
 		try {
 			Connection con = ((Conexion) _con).getCon();
-			int largo = 0;
 			PreparedStatement statement = con.prepareStatement(consultas.cantidadDeJuguetes());
 			statement.setInt(1, this.cedulaNiño);
 			ResultSet response = statement.executeQuery();
 			if (response.next()) {
 				largo = response.getInt("cantidad");
 			}
-			return largo;
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		}
+		return largo;
 	}
 
 	public Juguete k_esimo(IConexion _con, int k) throws PersistenciaException {

@@ -69,10 +69,10 @@ public class DAONiños extends IDAONiños {
 		}
 	}
 
-	public List<VONiño> listarNiños(IConexion _con) throws PersistenciaException {
+	public ArrayList<VONiño> listarNiños(IConexion _con) throws PersistenciaException {
 		try {
 			Connection con = ((Conexion) _con).getCon();
-			List<VONiño> lista = new ArrayList<VONiño>();
+			ArrayList<VONiño> lista = new ArrayList<VONiño>();
 			PreparedStatement statement = con.prepareStatement(consultas.listarNiños());
 			ResultSet response = statement.executeQuery();
 			while (response.next()) {

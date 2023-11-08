@@ -1,7 +1,7 @@
 package persistencia.daos;
 
 
-import java.util.List;
+import java.util.ArrayList;
 
 import config.ConfigException;
 import logica.Niño;
@@ -20,6 +20,5 @@ public abstract class IDAONiños {
 
 	    public abstract void delete(IConexion _con, int cedula) throws PersistenciaException, ConfigException ;
 	    
-	    public abstract List<VONiño> listarNiños(IConexion _con) throws PersistenciaException, ConfigException ;
-	
+	    public abstract ArrayList<VONiño> listarNiños(IConexion _con) throws PersistenciaException, ConfigException ;
 }

@@ -434,6 +434,7 @@ public class VentanaPrincipal extends JFrame {
 					}
 
 				} else {
+					lblErrorJuguete3.setForeground(Color.RED);
 					lblErrorJuguete.setText("Los campos no pueden estar vacios");
 					lblErrorJuguete.setVisible(true);
 				}

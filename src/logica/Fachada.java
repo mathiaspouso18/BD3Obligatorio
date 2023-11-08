@@ -100,70 +100,58 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	}
 
 	public ArrayList<VONiño> ListarNiños() throws NiñosException, PersistenciaException, ConfigException {
-		ArrayList<VONiño> listNiños;
+		ArrayList<VONiño> listNiños = null;
 		IConexion icon = pool.obtenerConexion(false);
 		try {
-			List<VONiño> lsta = daoNiños.listarNiños(icon);
-			pool.liberarConexion(icon, true);
-			if (lsta.isEmpty()) {
-				throw new NiñosException(3);
-			}
-			listNiños = new ArrayList<>();
-			Iterator<VONiño> iterador = lsta.iterator();
-			while (iterador.hasNext()) {
-				VONiño n = iterador.next();
-				VONiño von = new VONiño(n.getCedula(), n.getNombre(), n.getApellido());
-				listNiños.add(von);
-			}
-			return listNiños;
+			listNiños = daoNiños.listarNiños(icon);
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, false);
 			throw e;
 		}
+		pool.liberarConexion(icon, true);
+		if (listNiños.isEmpty()) throw new NiñosException(3);
+		return listNiños;
 	}
 
 	public ArrayList<VOJuguete> ListarJuguetes(int _ced) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
 		ArrayList<VOJuguete> listJuguetes = null;
 		IConexion icon = pool.obtenerConexion(false);
 		try {
-			if (daoNiños.member(icon, _ced)) {
-				Niño n = daoNiños.find(icon, _ced);
-				listJuguetes = n.listarJuguetes(icon);
-				if (listJuguetes.isEmpty()) {
-					pool.liberarConexion(icon, false);
-					throw new JuguetesException(3);
-				}
-			} else {
+			if (!daoNiños.member(icon, _ced)) {
 				pool.liberarConexion(icon, false);
 				throw new NiñosException(2);
 			}
+			Niño niño = daoNiños.find(icon, _ced);
+			listJuguetes = niño.listarJuguetes(icon);
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, false);
 			throw e;
 		}
 		pool.liberarConexion(icon, true);
+		if (listJuguetes.isEmpty()) throw new JuguetesException(3);
 		return listJuguetes;
 	}
 
 	public String DarDescripcion(int _ced, int _num) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
+		String descripcion;
 		IConexion icon = pool.obtenerConexion(false);
 		try {
 			if (!daoNiños.member(icon, _ced)) {
-				pool.liberarConexion(icon, true);
+				pool.liberarConexion(icon, false);
 				throw new NiñosException(2);
 			}
 			Niño niño = daoNiños.find(icon, _ced);
 			if (!niño.tieneJuguete(icon, _num)) {
-				pool.liberarConexion(icon, true);
+				pool.liberarConexion(icon, false);
 				throw new JuguetesException(4);
 			}
-			Juguete juguete = niño.obtenerJuguete(icon, _num);
-			pool.liberarConexion(icon, true);
-			return juguete.getDescripcion();
+			descripcion = niño.obtenerJuguete(icon, _num).getDescripcion();
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, true);
 			throw e;
 		}
+		pool.liberarConexion(icon, true);
+		return descripcion;
 	}
 
 	public void BajaJuguetes(VONiño _niño) throws NiñosException, PersistenciaException, ConfigException, RemoteException, JuguetesException {
@@ -180,10 +168,10 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				throw new JuguetesException(3);
 			}
 			niño.borrarJuguetes(icon);
-			pool.liberarConexion(icon, true);
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, false);
 			throw e;
 		}
+		pool.liberarConexion(icon, true);
 	}
 }

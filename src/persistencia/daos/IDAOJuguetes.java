@@ -17,7 +17,6 @@ public abstract class IDAOJuguetes {
 	
     public abstract void insback(IConexion _con, Juguete juguete) throws PersistenciaException;
         
-
     public abstract int largo(IConexion _con) throws PersistenciaException;
 
     public abstract Juguete k_esimo(IConexion _con,int k) throws PersistenciaException;
