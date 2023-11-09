@@ -18,8 +18,9 @@ import config.ConfigException;
 import logica.Niño;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
+import persistencia.poolConexiones.IConexion;
 
-public class DAONiñosArchivo extends IDAONiñosArchivo {
+public class DAONiñosArchivo extends IDAONiños{
 	private String carpeta = "ruta_de_la_carpeta";
 	
 	private String generarRutaArchivo (int cedula) {
@@ -55,12 +56,12 @@ public class DAONiñosArchivo extends IDAONiñosArchivo {
     }
 	
 	
-	public boolean member(int cedula) {
+	public boolean member(IConexion _con, int cedula) {
     	Path ruta = Paths.get(generarRutaArchivo(cedula));
     	return (Files.exists(ruta));	
     }
 
-    public void insert(Niño niño) throws PersistenciaException {
+    public void insert(IConexion _con, Niño niño) throws PersistenciaException {
     	
     	//Formato del contenido del archivo: "cedula=12345678;nombre=Juan;apellido=Perez"
     	String cedula = Integer.toString(niño.getCedula());
@@ -83,11 +84,11 @@ public class DAONiñosArchivo extends IDAONiñosArchivo {
         }
     }
 
-    public Niño find(int cedula) throws ConfigException  {
+    public Niño find(IConexion _con, int cedula) throws ConfigException  {
  
     	String ruta = generarRutaArchivo(cedula);
     	Niño n = null;
-		if(member(cedula)) {
+		if(member(_con, cedula)) {
 			Map<String, String> niñoMap = readFileIntoHashMap(ruta);
             String nombre = niñoMap.get("nombre");
             String apellido = niñoMap.get("apellido");
@@ -97,14 +98,14 @@ public class DAONiñosArchivo extends IDAONiñosArchivo {
 		
     }
 
-    public void delete(int cedula) throws PersistenciaException {
+    public void delete(IConexion _con, int cedula) throws PersistenciaException {
         File archivoNiño = new File(generarRutaArchivo(cedula));
         archivoNiño.delete();
 		File archivoJuguetes = new File(generarRutaArchivo(cedula).replace("niño", "juguetes"));
 		archivoJuguetes.delete();
     }
 
-    public ArrayList<VONiño> listarNiños() throws PersistenciaException {
+    public ArrayList<VONiño> listarNiños(IConexion _con) throws PersistenciaException {
     	ArrayList<VONiño> lista = new ArrayList<VONiño>();
 		File dir = new File(carpeta);
 

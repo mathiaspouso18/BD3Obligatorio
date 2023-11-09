@@ -15,9 +15,10 @@ import config.ConfigException;
 import logica.Juguete;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOJuguete;
+import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
-public class DAOJuguetesArchivo extends IDAOJuguetesArchivo  {
+public class DAOJuguetesArchivo extends IDAOJuguetes  {
 	//Formato del archivo juguetes: numero=1,descripcion=Autito;numero=2,descripcion=Muñeca
     private int cedulaNiño;
     private String carpeta = "ruta_de_la_carpeta";
@@ -57,7 +58,7 @@ public class DAOJuguetesArchivo extends IDAOJuguetesArchivo  {
         return list;
     }
 
-    public void insback(Juguete juguete) throws PersistenciaException {
+    public void insback(IConexion icon, Juguete juguete) throws PersistenciaException {
     	File archivoModificar = new File(generarRutaArchivo(this.cedulaNiño));
     	StringBuilder contenido = new StringBuilder();
     	 try (BufferedReader lectura = new BufferedReader(new FileReader(archivoModificar))) {
@@ -81,7 +82,7 @@ public class DAOJuguetesArchivo extends IDAOJuguetesArchivo  {
     	    }
     }
 
-    public int largo() throws PersistenciaException {
+    public int largo(IConexion icon) throws PersistenciaException {
         
     	int largo = 0;
     	try (BufferedReader br = new BufferedReader(new FileReader(generarRutaArchivo(this.cedulaNiño)))) {
@@ -101,7 +102,7 @@ public class DAOJuguetesArchivo extends IDAOJuguetesArchivo  {
         
     }
 
-    public Juguete k_esimo(int k) throws PersistenciaException {
+    public Juguete k_esimo(IConexion icon, int k) throws PersistenciaException {
     	List<Map<String, String>> juguetes = parseFile(generarRutaArchivo(this.cedulaNiño));
 		Juguete j = null;
 		if(k >= 0 && k < juguetes.size()) {
@@ -111,7 +112,7 @@ public class DAOJuguetesArchivo extends IDAOJuguetesArchivo  {
 		return j;
     }
 
-    public ArrayList<VOJuguete> listarJuguetes() throws PersistenciaException {
+    public ArrayList<VOJuguete> listarJuguetes(IConexion _con) throws PersistenciaException {
     	 ArrayList<VOJuguete> lista = new ArrayList<VOJuguete>();
 		List<Map<String, String>> juguetes = parseFile(generarRutaArchivo(this.cedulaNiño));
 		for( Map<String, String> juguete : juguetes) {				
@@ -120,7 +121,7 @@ public class DAOJuguetesArchivo extends IDAOJuguetesArchivo  {
 		return lista; 
     }
 
-    public void borrarJuguetes() throws PersistenciaException {
+    public void borrarJuguetes(IConexion icon) throws PersistenciaException {
     	 try {
              FileWriter fw = new FileWriter(generarRutaArchivo(this.cedulaNiño), false);
              //'false' indica que queremos sobrescribir todo
