@@ -5,7 +5,6 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
-import config.ConfigException;
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
 import logica.excepciones.JuguetesException;
@@ -27,7 +26,7 @@ public class ControladorBajaJuguetes {
 		fachada = (IFachada) Naming.lookup(ruta);
 	}
 
-	public void BajarJuguetes(int _cedula) throws NiñosException, PersistenciaException, RemoteException, ConfigException, JuguetesException {
+	public void BajarJuguetes(int _cedula) throws NiñosException, PersistenciaException, RemoteException, JuguetesException {
 		try {
 			VONiño von = new VONiño(_cedula, null, null);
 			fachada.BajaJuguetes(von);

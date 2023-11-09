@@ -5,9 +5,9 @@ import persistencia.poolConexiones.IPoolConexiones;
 
 public interface FabricaAbstracta {
 	
-	IDAOJuguetes crearDAOJuguetes(int cedula) throws ConfigException;
+	IDAOJuguetes crearDAOJuguetes(int cedula);
 	
-	IDAONiños crearDAONiños() throws ConfigException;
+	IDAONiños crearDAONiños();
 
-	IPoolConexiones crearPool();
+	IPoolConexiones crearPool() throws ConfigException;
 }

@@ -26,7 +26,7 @@ public class ControladorBuscarDescripcion {
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 
-	public String BuscarDecripcion(int _cedula, int _numero) throws NiñosException, PersistenciaException, JuguetesException, RemoteException, ConfigException {
+	public String BuscarDecripcion(int _cedula, int _numero) throws NiñosException, PersistenciaException, JuguetesException, RemoteException {
 		String descripcion = "";
 		try {
 			descripcion = cap.DarDescripcion(_cedula, _numero);

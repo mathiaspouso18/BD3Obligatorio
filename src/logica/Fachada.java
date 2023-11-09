@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import config.ConfigException;
@@ -25,12 +24,12 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 	private static IPoolConexiones pool;
 
-	public Fachada() throws ClassNotFoundException, IOException, ConfigException {
+	public Fachada() throws ClassNotFoundException, IOException, ConfigException, PersistenciaException {
 		pool = FabricaUtil.buildFabrica().crearPool();
 		daoNiños = FabricaUtil.buildFabrica().crearDAONiños();
 	}
 
-	public void AltaNiño(VONiño niño) throws PersistenciaException, NiñosException, ConfigException {
+	public void AltaNiño(VONiño niño) throws PersistenciaException, NiñosException {
 		int _cedula = niño.getCedula();
 		IConexion icon = pool.obtenerConexion(false);
 		try {
@@ -50,7 +49,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 	}
 
-	public void AltaJuguete(VOJuguete juguete) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
+	public void AltaJuguete(VOJuguete juguete) throws NiñosException, PersistenciaException, JuguetesException {
 		int _ced = juguete.getCedulaNinio();
 		IConexion icon = pool.obtenerConexion(false);
 		try {
@@ -69,7 +68,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 	}
 
-	public void BajaNiño(VONiño niño) throws NiñosException, PersistenciaException, ConfigException {
+	public void BajaNiño(VONiño niño) throws NiñosException, PersistenciaException {
 		int _cedula = niño.getCedula();
 		IConexion icon = pool.obtenerConexion(false);
 		try {
@@ -90,7 +89,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 	}
 
-	public ArrayList<VONiño> ListarNiños() throws NiñosException, PersistenciaException, ConfigException {
+	public ArrayList<VONiño> ListarNiños() throws NiñosException, PersistenciaException {
 		ArrayList<VONiño> listNiños = null;
 		IConexion icon = pool.obtenerConexion(false);
 		try {
@@ -104,7 +103,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		return listNiños;
 	}
 
-	public ArrayList<VOJuguete> ListarJuguetes(int _ced) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
+	public ArrayList<VOJuguete> ListarJuguetes(int _ced) throws NiñosException, PersistenciaException, JuguetesException {
 		ArrayList<VOJuguete> listJuguetes = null;
 		IConexion icon = pool.obtenerConexion(false);
 		try {
@@ -123,7 +122,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		return listJuguetes;
 	}
 
-	public String DarDescripcion(int _ced, int _num) throws NiñosException, PersistenciaException, JuguetesException, ConfigException {
+	public String DarDescripcion(int _ced, int _num) throws NiñosException, PersistenciaException, JuguetesException {
 		String descripcion;
 		IConexion icon = pool.obtenerConexion(false);
 		try {
@@ -145,7 +144,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		return descripcion;
 	}
 
-	public void BajaJuguetes(VONiño _niño) throws NiñosException, PersistenciaException, ConfigException, RemoteException, JuguetesException {
+	public void BajaJuguetes(VONiño _niño) throws NiñosException, PersistenciaException, RemoteException, JuguetesException {
 		int _cedula = _niño.getCedula();
 		IConexion icon = pool.obtenerConexion(false);
 		try {

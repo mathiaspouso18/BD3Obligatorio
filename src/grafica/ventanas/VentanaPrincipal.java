@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import config.ConfigException;
 import grafica.controladores.ControladorAltaJuguetes;
 import grafica.controladores.ControladorAltaNinio;
 import grafica.controladores.ControladorBajaNinio;
@@ -117,9 +116,6 @@ public class VentanaPrincipal extends JFrame {
 				lblErrorJuguete2.setText(ne.getMensajeNiñosExcep());
 			} catch (PersistenciaException e1) {
 				e1.printStackTrace();
-			} catch (ConfigException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			} catch (JuguetesException je) {
 				lblErrorJuguete2.setForeground(Color.RED);
 				lblErrorJuguete2.setText(je.getMensajeJuguetesExcep());
@@ -153,14 +149,12 @@ public class VentanaPrincipal extends JFrame {
 				lblErrorJuguete2.setForeground(Color.RED);
 				lblErrorJuguete2.setText(ne.getMensajeNiñosExcep());
 			} catch (PersistenciaException e1) {
-				e1.printStackTrace();
+				lblErrorJuguete2.setForeground(Color.RED);
+				lblErrorJuguete2.setText(e1.getMensajePersistenciaExcep());
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} catch (ConfigException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			} 
 		} else {
 			lblErrorJuguete2.setText("Debe ingresar la cedula del niño");
 			lblErrorJuguete2.setForeground(Color.RED);
@@ -168,7 +162,7 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 
-	public static void actualizarNinios() throws ConfigException {
+	public static void actualizarNinios() {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		model.getDataVector().removeAllElements();
 		model.fireTableDataChanged();
@@ -178,12 +172,14 @@ public class VentanaPrincipal extends JFrame {
 				model.addRow(d);
 			}
 		} catch (NiñosException ne) {
-
+			lblError.setText(ne.getMensajeNiñosExcep());
+			lblError.setForeground(Color.RED);
+			lblError.setVisible(true);
 		} catch (PersistenciaException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			lblError.setText(e1.getMensajePersistenciaExcep());
+			lblError.setForeground(Color.RED);
+			lblError.setVisible(true);
 		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -221,9 +217,6 @@ public class VentanaPrincipal extends JFrame {
 		pnlCentral.add(pnlJuguetes);
 		pnlJuguetes.setLayout(null);
 		modelJuguetes = new DefaultTableModel() {
-			/**
-			 *
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -381,9 +374,6 @@ public class VentanaPrincipal extends JFrame {
 					} catch (PersistenciaException e1) {
 						e1.printStackTrace();
 					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (ConfigException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (NumberFormatException e1) {
@@ -567,9 +557,6 @@ public class VentanaPrincipal extends JFrame {
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					} catch (ConfigException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
 					}
 				} else {
 					lblError.setText("Debe ingresar la cedula del niño");
@@ -582,12 +569,7 @@ public class VentanaPrincipal extends JFrame {
 		btnListarNiños.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					actualizarNinios();
-				} catch (ConfigException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				actualizarNinios();
 			}
 		});
 		btnInsertarNinio.addActionListener(new ActionListener() {
@@ -617,9 +599,6 @@ public class VentanaPrincipal extends JFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (ConfigException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}

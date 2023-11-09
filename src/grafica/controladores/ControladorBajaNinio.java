@@ -26,7 +26,7 @@ public class ControladorBajaNinio {
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 
-	public void BajaNinio(int _cedula) throws NiñosException, PersistenciaException, RemoteException, ConfigException {
+	public void BajaNinio(int _cedula) throws NiñosException, PersistenciaException, RemoteException {
 		try {
 			VONiño von = new VONiño(_cedula, null, null);
 			cap.BajaNiño(von);

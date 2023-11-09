@@ -42,7 +42,7 @@ public class DAONiños extends IDAONiños {
 		}
 	}
 
-	public Niño find(IConexion _con, int cedula) throws PersistenciaException, ConfigException {
+	public Niño find(IConexion _con, int cedula) throws PersistenciaException{
 		try {
 			Connection con = ((Conexion) _con).getCon();
 			Niño n = null;

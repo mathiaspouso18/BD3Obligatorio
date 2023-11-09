@@ -15,7 +15,7 @@ public class Niño {
     private String apellido;
     private IDAOJuguetes secuencia;
 
-    public Niño(int cedula, String nombre, String apellido) throws ConfigException {
+    public Niño(int cedula, String nombre, String apellido) throws PersistenciaException {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;

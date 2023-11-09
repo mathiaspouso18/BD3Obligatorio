@@ -1,17 +1,15 @@
 package persistencia.daos;
 
-import config.ConfigException;
 import persistencia.poolConexiones.IPoolConexiones;
-import persistencia.poolConexiones.PoolConexionesSQL;
 
 public class FabricaArchivos implements FabricaAbstracta {
 	@Override
-	public IDAOJuguetes crearDAOJuguetes(int cedula) throws ConfigException{
+	public IDAOJuguetes crearDAOJuguetes(int cedula) {
 		return new DAOJuguetesArchivo(cedula);
 	}
 
 	@Override
-	public IDAONiños crearDAONiños() throws ConfigException{
+	public IDAONiños crearDAONiños() {
 		return new DAONiñosArchivo();
 	}
 

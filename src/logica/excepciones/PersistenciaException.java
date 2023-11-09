@@ -18,10 +18,10 @@ public class PersistenciaException extends Exception {
 				mensaje = "Error al cerrar la conexión";
 				break;
 			case 3:
-				mensaje = "Error al ejecutando la sentencia";
+				mensaje = "Error al obtener datos";
 				break;
 			default:
-				mensaje = "Error no especificado";
+				mensaje = "La aplicación ha encontrado un error desconocido";
 		}
 		return mensaje;
 	}

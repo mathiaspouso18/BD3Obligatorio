@@ -27,7 +27,7 @@ public class ControladorListadoNinios {
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 
-	public ArrayList<String[]> ListadoNinios() throws NiñosException, PersistenciaException, RemoteException, ConfigException {
+	public ArrayList<String[]> ListadoNinios() throws NiñosException, PersistenciaException, RemoteException {
 		ArrayList<String[]> array = new ArrayList<String[]>();
 		try {
 			ArrayList<VONiño> arr = cap.ListarNiños();

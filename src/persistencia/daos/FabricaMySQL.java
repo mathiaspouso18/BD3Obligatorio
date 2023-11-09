@@ -6,16 +6,16 @@ import persistencia.poolConexiones.PoolConexionesSQL;
 
 public class FabricaMySQL implements FabricaAbstracta {
 	@Override
-	public IDAOJuguetes crearDAOJuguetes(int cedula) throws ConfigException{
+	public IDAOJuguetes crearDAOJuguetes(int cedula){
 		return new DAOJuguetes(cedula);
 	}
 
 	@Override
-	public IDAONiños crearDAONiños() throws ConfigException{
+	public IDAONiños crearDAONiños(){
 		return new DAONiños();
 	}
 	
-	public IPoolConexiones crearPool() {
+	public IPoolConexiones crearPool() throws ConfigException {
 		return new PoolConexionesSQL();
 	}
 }

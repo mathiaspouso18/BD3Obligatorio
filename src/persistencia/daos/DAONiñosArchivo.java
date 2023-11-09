@@ -84,7 +84,7 @@ public class DAONiñosArchivo extends IDAONiños{
         }
     }
 
-    public Niño find(IConexion _con, int cedula) throws ConfigException  {
+    public Niño find(IConexion _con, int cedula) throws PersistenciaException {
  
     	String ruta = generarRutaArchivo(cedula);
     	Niño n = null;

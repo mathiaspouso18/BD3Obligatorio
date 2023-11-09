@@ -16,8 +16,14 @@ public class PoolConexionesSQL implements IPoolConexiones {
 	private int tamanio;
 	private int creadas;
 	private int tope;
+	private String url;
+	private String user;
+	private String password;
 
-	public PoolConexionesSQL() {
+	public PoolConexionesSQL() throws ConfigException {
+		url = ConfigManager.getInstance().getProperty("url");
+		user = ConfigManager.getInstance().getProperty("user");
+		password = ConfigManager.getInstance().getProperty("password");
 		nivelTransaccionalidad = Connection.TRANSACTION_SERIALIZABLE;
 		tamanio = 3;
 		conexiones = new Conexion[tamanio];
@@ -31,7 +37,7 @@ public class PoolConexionesSQL implements IPoolConexiones {
 
 	}
 
-	public static PoolConexionesSQL getInstancia() {
+	public static PoolConexionesSQL getInstancia() throws ConfigException {
 		if (instancia == null) {
 			instancia = new PoolConexionesSQL();
 		}
@@ -39,7 +45,7 @@ public class PoolConexionesSQL implements IPoolConexiones {
 	}
 
 	@Override
-	public IConexion obtenerConexion(boolean modifica) throws PersistenciaException, ConfigException {
+	public IConexion obtenerConexion(boolean modifica) throws PersistenciaException {
 		try {
 			synchronized (this) {
 				if (tope >= 0) {//Tengo conexiones disponibles		
@@ -88,13 +94,9 @@ public class PoolConexionesSQL implements IPoolConexiones {
 		}
 	}
 
-	private Connection crearConnection() throws PersistenciaException, ConfigException {
+	private Connection crearConnection() throws PersistenciaException {
 		try {
-			return DriverManager.getConnection(
-					ConfigManager.getInstance().getProperty("url"),
-					ConfigManager.getInstance().getProperty("user"),
-					ConfigManager.getInstance().getProperty("password")
-			);
+			return DriverManager.getConnection(url, user, password);
 		} catch (SQLException e) {
 			throw new PersistenciaException(3);
 		}
