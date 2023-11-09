@@ -21,7 +21,7 @@ import persistencia.poolConexiones.IConexion;
 public class DAOJuguetesArchivo extends IDAOJuguetes  {
 	//Formato del archivo juguetes: numero=1,descripcion=Autito;numero=2,descripcion=Muñeca
     private int cedulaNiño;
-    private String carpeta = "ruta_de_la_carpeta";
+    private String carpeta = "/BD3Obligatorio/PersistenciaArchivos/";
     
     public DAOJuguetesArchivo(int cedula) {
     	super(cedula);
