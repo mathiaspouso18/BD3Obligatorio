@@ -20,7 +20,7 @@ import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
 
 public class DAONiñosArchivo extends IDAONiñosArchivo {
-	private String carpeta = "ruta_de_la_carpeta";
+	private String carpeta = "/BD3Obligatorio/PersistenciaArchivos/";
 	
 	private String generarRutaArchivo (int cedula) {
 		return carpeta + "niño-" + Integer.toString(cedula) + ".txt";

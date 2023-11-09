@@ -1,0 +1,1 @@
+cedula=2345678;nombre=Juana;apellido=Recoba
