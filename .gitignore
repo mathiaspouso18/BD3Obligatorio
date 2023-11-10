@@ -3,3 +3,4 @@
 .project
 src/.idea/misc.xml
 src/.idea/workspace.xml
+*.txt

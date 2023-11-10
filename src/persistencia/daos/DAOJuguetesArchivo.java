@@ -87,13 +87,10 @@ public class DAOJuguetesArchivo extends IDAOJuguetes {
 
 	public Juguete k_esimo(IConexion icon, int k) throws PersistenciaException {
 		Juguete juguete = null;
-		ArrayList<Map<String, String>> juguetesFile = parseFile(generarRutaArchivo(this.cedulaNiño));
-		int i = 0;
-		while(juguete == null && i < juguetesFile.size()) {
-			Map<String, String> jugueteFile = juguetesFile.get(i);
-			i++;
-			int num = Integer.parseInt(jugueteFile.get("numero"));
-			if(num == k ) juguete = new Juguete(num, jugueteFile.get("descripcion"));
+		ArrayList<Map<String, String>> juguetes = parseFile(generarRutaArchivo(this.cedulaNiño));
+		if (k > 0 && k <= juguetes.size()) {
+			Map<String, String> jugueteKesimo = juguetes.get(k-1);
+			juguete = new Juguete(Integer.parseInt(jugueteKesimo.get("numero")), jugueteKesimo.get("descripcion"));
 		}
 		return juguete;
 	}
