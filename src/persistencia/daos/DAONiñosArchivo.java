@@ -21,10 +21,9 @@ import logica.valueObjects.VONiño;
 import persistencia.poolConexiones.IConexion;
 
 public class DAONiñosArchivo extends IDAONiños{
-	private String carpeta = "/BD3Obligatorio/PersistenciaArchivos/";
-	
+		
 	private String generarRutaArchivo (int cedula) {
-		return carpeta + "niño-" + Integer.toString(cedula) + ".txt";
+		return UtilArchivo.obtenerRuta() + "niño-" + Integer.toString(cedula) + ".txt";
 	}
 	
 	private static Map<String, String> readFileIntoHashMap(String rutaArchivo) {
@@ -107,7 +106,7 @@ public class DAONiñosArchivo extends IDAONiños{
 
     public ArrayList<VONiño> listarNiños(IConexion _con) throws PersistenciaException {
     	ArrayList<VONiño> lista = new ArrayList<VONiño>();
-		File dir = new File(carpeta);
+		File dir = new File(UtilArchivo.obtenerRuta());
 
 		// Filtro que determina si el nombre del archivo comienza con "niño" y es un archivo (no una carpeta)
 		FilenameFilter filtroNiños = new FilenameFilter() {

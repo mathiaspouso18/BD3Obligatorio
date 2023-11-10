@@ -21,14 +21,13 @@ import persistencia.poolConexiones.IConexion;
 public class DAOJuguetesArchivo extends IDAOJuguetes  {
 	//Formato del archivo juguetes: numero=1,descripcion=Autito;numero=2,descripcion=Muñeca
     private int cedulaNiño;
-    private String carpeta = "/BD3Obligatorio/PersistenciaArchivos/";
     
     public DAOJuguetesArchivo(int cedula) {
     	super(cedula);
     }
     
     private String generarRutaArchivo (int cedula) {
-		return carpeta + "juguetes-" + Integer.toString(cedula) + ".txt";
+		return UtilArchivo.obtenerRuta() + "juguetes-" + Integer.toString(cedula) + ".txt";
 	}
     
     public static List<Map<String, String>> parseFile(String rutaArchivo) {

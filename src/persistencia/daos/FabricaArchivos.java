@@ -1,6 +1,7 @@
 package persistencia.daos;
 
 import persistencia.poolConexiones.IPoolConexiones;
+import persistencia.poolConexiones.PoolConexionesArchivo;
 
 public class FabricaArchivos implements FabricaAbstracta {
 	@Override
@@ -15,7 +16,6 @@ public class FabricaArchivos implements FabricaAbstracta {
 
 	@Override
 	public IPoolConexiones crearPool() {
-		// TODO Auto-generated method stub
-		return null;
+		return PoolConexionesArchivo.getInstancia();
 	}
 }
