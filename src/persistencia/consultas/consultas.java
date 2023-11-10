@@ -32,7 +32,7 @@ public class consultas {
 	}
 
 	public static String listarJuguetes() {
-		return "SEL;ECT * FROM Juguetes WHERE cedulaNinio = ? ORDER BY numero";
+		return "SELECT * FROM Juguetes WHERE cedulaNinio = ? ORDER BY numero";
 	}
 
 	public static String darDescripcion() {
