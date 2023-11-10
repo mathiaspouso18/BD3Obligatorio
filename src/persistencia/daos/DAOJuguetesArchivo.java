@@ -33,19 +33,15 @@ public class DAOJuguetesArchivo extends IDAOJuguetes {
 			String linea = br.readLine(); // Se asume que todo está en una sola línea
 			if (linea != null && !linea.isEmpty()) {
 				// Divide cada juguete delimitado por ";"
-				String[] records = linea.split(";");
-				for (String record : records) {
-					System.out.println("record: " + record);
+				String[] juguetes = linea.split(";");
+				for (String juguete : juguetes) {
 					Map<String, String> map = new HashMap<>();
 					// Divide el juguete en pares clave-valor
-					String[] keyValuePairs = record.split(", ");
-					for (String pair : keyValuePairs) {
-						System.out.println("pair: " + pair);
+					String[] atributos = juguete.split(",");
+					for (String atributo : atributos) {
 						// Divide el par clave-valor
-						String[] keyValue = pair.split("=");
+						String[] keyValue = atributo.split("=");
 						if (keyValue.length == 2) {
-							System.out.println("keyValue[0]: " + keyValue[0]);
-							System.out.println("keyValue[1].trim(): " + keyValue[1].trim());
 							map.put(keyValue[0].trim(), keyValue[1].trim());
 						}
 					}
@@ -116,11 +112,14 @@ public class DAOJuguetesArchivo extends IDAOJuguetes {
 		ArrayList<VOJuguete> lista = new ArrayList<VOJuguete>();
 
 		List<Map<String, String>> juguetes = parseFile(generarRutaArchivo(this.cedulaNiño));
-		System.out.println("juguetes: " + juguetes);
-		if (!lista.isEmpty())
+		
+		if (!juguetes.isEmpty()) {
+			System.out.println("juguetes: " + juguetes);
 			for (Map<String, String> juguete : juguetes) {
+				System.out.println("juguete: " + juguete);
 				lista.add(new VOJuguete(Integer.parseInt(juguete.get("numero")), juguete.get("descripcion"), this.cedulaNiño));
 			}
+		}
 		return lista;
 	}
 
