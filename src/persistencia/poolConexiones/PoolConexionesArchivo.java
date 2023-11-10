@@ -3,26 +3,21 @@ package persistencia.poolConexiones;
 import logica.excepciones.PersistenciaException;
 
 public class PoolConexionesArchivo implements IPoolConexiones{
-	
-	//Atributos
 	private static PoolConexionesArchivo instancia;
 	private int lectores;
 	private boolean alguienEscribe;
 	
-	//Constructor privado
 	private PoolConexionesArchivo(){
 		lectores = 0;
 		alguienEscribe = false;
 	}
 	
-	//getInstancia llama a constructor si lo requiere
 	public static PoolConexionesArchivo getInstancia() {
 		if (instancia == null) {
 			instancia = new PoolConexionesArchivo();
 		}
 		return instancia;
 	}
-
 
 	public synchronized IConexion obtenerConexion(boolean modifica) throws PersistenciaException {
 		if (modifica){
@@ -42,7 +37,6 @@ public class PoolConexionesArchivo implements IPoolConexiones{
 		}
 	}
 	
-	//Comienzo lectura
 	private void comienzoLectura () throws PersistenciaException {
 		try {
 			while (getInstancia().alguienEscribe)
@@ -56,14 +50,12 @@ public class PoolConexionesArchivo implements IPoolConexiones{
 		}
 	}
 
-	//Fin lectura
 	private void finLectura () {
 		getInstancia().lectores--;
 		if (getInstancia().lectores == 0)
 			notify();
 	}
 	
-	//Comienzo escritura
 	private void comienzoEscritura () throws PersistenciaException {
 		try {
 			while (getInstancia().alguienEscribe || getInstancia().lectores > 0)
@@ -75,11 +67,8 @@ public class PoolConexionesArchivo implements IPoolConexiones{
 		}
 	}
 
-	//Fin escritura
 	private void finEscritura () {
 		getInstancia().alguienEscribe = false;
 		notify();
 	}
-	
-
 }

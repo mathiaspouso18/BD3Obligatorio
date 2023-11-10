@@ -48,10 +48,10 @@ public class PoolConexionesSQL implements IPoolConexiones {
 	public IConexion obtenerConexion(boolean modifica) throws PersistenciaException {
 		try {
 			synchronized (this) {
-				if (tope >= 0) {//Tengo conexiones disponibles		
+				if (tope >= 0) {
 					tope--;
 					return comenzarTransaccion(conexiones[tope + 1]);
-				} else if (creadas < tamanio) {//Puedo crear conexiones
+				} else if (creadas < tamanio) {
 					creadas++;
 					return comenzarTransaccion(new Conexion(crearConnection()));
 				} else {
@@ -59,9 +59,7 @@ public class PoolConexionesSQL implements IPoolConexiones {
 					return obtenerConexion(modifica);
 				}
 			}
-		} catch (InterruptedException e) {
-			//TODO: hacer nada
-		}
+		} catch (InterruptedException e) { }
 		return null;
 	}
 

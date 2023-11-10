@@ -5,7 +5,6 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
-import config.ConfigException;
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
 import logica.excepciones.JuguetesException;
@@ -22,7 +21,6 @@ public class ControladorBuscarDescripcion {
 		String ip = p.getProperty("ipServidor");
 		String puerto = p.getProperty("puertoServidor");
 		String ruta = "//" + ip + ":" + puerto + "/fachada";
-
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 

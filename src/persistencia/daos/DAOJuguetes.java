@@ -15,11 +15,9 @@ import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
 public class DAOJuguetes extends IDAOJuguetes{
-	
-    public DAOJuguetes(int cedula) {
+	public DAOJuguetes(int cedula) {
 		super(cedula);
 	}
-    
 	public void insback(IConexion _con, Juguete juguete) throws PersistenciaException {
 		try {
 			Connection con = ((Conexion) _con).getCon();

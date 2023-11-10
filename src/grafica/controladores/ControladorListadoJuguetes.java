@@ -9,7 +9,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import config.ConfigException;
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
 import logica.excepciones.JuguetesException;
@@ -27,7 +26,6 @@ public class ControladorListadoJuguetes {
 		String ip = p.getProperty("ipServidor");
 		String puerto = p.getProperty("puertoServidor");
 		String ruta = "//" + ip + ":" + puerto + "/fachada";
-
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 
@@ -40,7 +38,6 @@ public class ControladorListadoJuguetes {
 				Integer numero = v.getNumero();
 				Integer cedula = v.getCedulaNinio();
 				String descripcion = v.getDescripcion();
-
 				data[0] = String.valueOf(numero);
 				data[1] = String.valueOf(cedula);
 				data[2] = descripcion;

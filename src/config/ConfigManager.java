@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
 public class ConfigManager {
 	private static ConfigManager instance;
 	//Se usa en entornos de programación multihilo, 

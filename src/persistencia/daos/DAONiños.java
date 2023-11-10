@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
-import config.ConfigException;
 import logica.Niño;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VONiño;
@@ -16,7 +14,6 @@ import persistencia.poolConexiones.Conexion;
 import persistencia.poolConexiones.IConexion;
 
 public class DAONiños extends IDAONiños {
-
 	public boolean member(IConexion _con, int cedula) throws PersistenciaException {
 		try {
 			Connection con = ((Conexion) _con).getCon();

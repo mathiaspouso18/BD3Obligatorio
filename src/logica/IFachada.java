@@ -4,7 +4,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import config.ConfigException;
 import logica.excepciones.JuguetesException;
 import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;

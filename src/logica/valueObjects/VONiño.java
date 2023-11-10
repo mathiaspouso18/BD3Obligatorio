@@ -2,15 +2,12 @@ package logica.valueObjects;
 
 import java.io.Serializable;
 
-public class VONiño implements Serializable  {
-	private static final long serialVersionUID = 1L;
+public class VONiño implements Serializable {
 	int cedula;
 	String nombre;
 	String apellido;
 
-	public VONiño() {
-
-	}
+	public VONiño() { }
 
 	public VONiño(int cedula, String nombre, String apellido) {
 		super();

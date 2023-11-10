@@ -1,7 +1,6 @@
 package logica.excepciones;
 
 public class NiñosException extends Exception {
-	private static final long serialVersionUID = 1L;
 	private int codigoError;
 
 	public NiñosException(int cod) {

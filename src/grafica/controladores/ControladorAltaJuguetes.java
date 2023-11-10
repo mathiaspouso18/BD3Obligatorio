@@ -19,7 +19,6 @@ public class ControladorAltaJuguetes {
 		String ip = p.getProperty("ipServidor");
 		String puerto = p.getProperty("puertoServidor");
 		String ruta = "//" + ip + ":" + puerto + "/fachada";
-
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 

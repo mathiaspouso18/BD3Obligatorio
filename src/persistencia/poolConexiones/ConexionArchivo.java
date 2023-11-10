@@ -1,7 +1,6 @@
 package persistencia.poolConexiones;
 
-public class ConexionArchivo implements IConexion{
-	
+public class ConexionArchivo implements IConexion {
 	private boolean escritura;
 	
 	public ConexionArchivo(boolean escritura) {
@@ -15,8 +14,4 @@ public class ConexionArchivo implements IConexion{
 	public void setEscritura(boolean escritura) {
 		this.escritura = escritura;
 	}
-	
-	
-	
-
 }

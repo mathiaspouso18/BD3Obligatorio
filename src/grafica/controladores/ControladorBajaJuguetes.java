@@ -22,7 +22,6 @@ public class ControladorBajaJuguetes {
 		String ip = p.getProperty("ipServidor");
 		String puerto = p.getProperty("puertoServidor");
 		String ruta = "//" + ip + ":" + puerto + "/fachada";
-
 		fachada = (IFachada) Naming.lookup(ruta);
 	}
 

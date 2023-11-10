@@ -5,7 +5,6 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
-import config.ConfigException;
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
 import logica.excepciones.NiñosException;
@@ -14,7 +13,7 @@ import logica.valueObjects.VONiño;
 
 public class ControladorBajaNinio {
 	private IFachada cap;
-
+	
 	public ControladorBajaNinio(VentanaPrincipal vp) throws Exception {
 		Properties p = new Properties();
 		String nomArch = "src/config/config.properties";
@@ -22,7 +21,6 @@ public class ControladorBajaNinio {
 		String ip = p.getProperty("ipServidor");
 		String puerto = p.getProperty("puertoServidor");
 		String ruta = "//" + ip + ":" + puerto + "/fachada";
-
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 

@@ -1,5 +1,3 @@
 package persistencia.poolConexiones;
 
-public interface IConexion {
-
-}
+public interface IConexion { }

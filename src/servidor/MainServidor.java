@@ -17,11 +17,7 @@ public class MainServidor {
 		try {
 			String ip = ConfigManager.getInstance().getProperty("ipServidor");
 			int port = ConfigManager.getInstance().getIntProperty("puertoServidor");
-
-			//pongo a correr el rmiregistry
 			LocateRegistry.createRegistry(port);
-
-			//publico el objeto remoto en dicha ip y puerto
 			String ruta = "//" + ip + ":" + Integer.toString(port) + "/fachada";
 			Fachada fachada = new Fachada();
 			System.out.println("Antes de publicar");
