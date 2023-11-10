@@ -75,7 +75,6 @@ public class DAONiñosArchivo extends IDAONiños{
             nuevoNiño.close();
             
             FileWriter juguetesNiño = new FileWriter(ruta.replace("niño", "juguetes"));
-            juguetesNiño.write("[]");
             juguetesNiño.close();
         } catch (IOException e) {
             System.out.println("Ocurrió un error al crear o escribir en el archivo.");

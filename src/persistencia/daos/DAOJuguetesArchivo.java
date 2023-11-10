@@ -20,7 +20,6 @@ import persistencia.poolConexiones.IConexion;
 
 public class DAOJuguetesArchivo extends IDAOJuguetes  {
 	//Formato del archivo juguetes: numero=1,descripcion=Autito;numero=2,descripcion=Muñeca
-    private int cedulaNiño;
     
     public DAOJuguetesArchivo(int cedula) {
     	super(cedula);
@@ -30,7 +29,7 @@ public class DAOJuguetesArchivo extends IDAOJuguetes  {
 		return UtilArchivo.obtenerRuta() + "juguetes-" + Integer.toString(cedula) + ".txt";
 	}
     
-    public static List<Map<String, String>> parseFile(String rutaArchivo) {
+    public List<Map<String, String>> parseFile(String rutaArchivo) {
         List<Map<String, String>> list = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
             String linea = br.readLine(); // Se asume que todo está en una sola línea
@@ -38,13 +37,17 @@ public class DAOJuguetesArchivo extends IDAOJuguetes  {
                 // Divide cada juguete delimitado por ";"
                 String[] records = linea.split(";");
                 for (String record : records) {
+                	System.out.println("record: " + record);
                     Map<String, String> map = new HashMap<>();
                     // Divide el juguete en pares clave-valor
                     String[] keyValuePairs = record.split(", ");
                     for (String pair : keyValuePairs) {
+                    	System.out.println("pair: " + pair);
                         // Divide el par clave-valor
                         String[] keyValue = pair.split("=");
                         if (keyValue.length == 2) {
+                        	System.out.println("keyValue[0]: " + keyValue[0]);
+                        	System.out.println("keyValue[1].trim(): " + keyValue[1].trim());
                             map.put(keyValue[0].trim(), keyValue[1].trim());
                         }
                     }
@@ -112,11 +115,14 @@ public class DAOJuguetesArchivo extends IDAOJuguetes  {
     }
 
     public ArrayList<VOJuguete> listarJuguetes(IConexion _con) throws PersistenciaException {
-    	 ArrayList<VOJuguete> lista = new ArrayList<VOJuguete>();
+    	ArrayList<VOJuguete> lista = new ArrayList<VOJuguete>();
+    	
 		List<Map<String, String>> juguetes = parseFile(generarRutaArchivo(this.cedulaNiño));
-		for( Map<String, String> juguete : juguetes) {				
-			lista.add(new VOJuguete(Integer.parseInt(juguete.get("numero")), juguete.get("descripcion"), this.cedulaNiño));
-		}
+		System.out.println("juguetes: " + juguetes);
+		if (!lista.isEmpty())
+			for( Map<String, String> juguete : juguetes) {				
+				lista.add(new VOJuguete(Integer.parseInt(juguete.get("numero")), juguete.get("descripcion"), this.cedulaNiño));
+			}
 		return lista; 
     }
 

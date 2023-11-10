@@ -1,0 +1,1 @@
+numero=1,descripcion=Autito;numero=2,descripcion=Muñeca
