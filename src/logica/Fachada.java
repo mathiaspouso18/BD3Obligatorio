@@ -48,7 +48,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			throw e;
 		}
 	}
-
+	
 	public void AltaJuguete(VOJuguete juguete) throws NiñosException, PersistenciaException, JuguetesException {
 		int _ced = juguete.getCedulaNinio();
 		IConexion icon = pool.obtenerConexion(false);

@@ -79,7 +79,6 @@ public class DAOJuguetesArchivo extends IDAOJuguetes {
 	}
 
 	public int largo(IConexion icon) throws PersistenciaException {
-
 		int largo = 0;
 		try (BufferedReader br = new BufferedReader(new FileReader(generarRutaArchivo(this.cedulaNiño)))) {
 			String line = br.readLine();
@@ -99,18 +98,20 @@ public class DAOJuguetesArchivo extends IDAOJuguetes {
 	}
 
 	public Juguete k_esimo(IConexion icon, int k) throws PersistenciaException {
-		List<Map<String, String>> juguetes = parseFile(generarRutaArchivo(this.cedulaNiño));
-		Juguete j = null;
-		if (k >= 0 && k < juguetes.size()) {
-			Map<String, String> jugueteKesimo = juguetes.get(k);
-			j = new Juguete(Integer.parseInt(jugueteKesimo.get("numero")), jugueteKesimo.get("descripcion"));
+		Juguete juguete = null;
+		List<Map<String, String>> juguetesFile = parseFile(generarRutaArchivo(this.cedulaNiño));
+		int i = 0;
+		while(juguete == null && i < juguetesFile.size()) {
+			Map<String, String> jugueteFile = juguetesFile.get(i);
+			i++;
+			int num = Integer.parseInt(jugueteFile.get("numero"));
+			if(num == k ) juguete = new Juguete(num, jugueteFile.get("descripcion"));
 		}
-		return j;
+		return juguete;
 	}
 
 	public ArrayList<VOJuguete> listarJuguetes(IConexion _con) throws PersistenciaException {
 		ArrayList<VOJuguete> lista = new ArrayList<VOJuguete>();
-
 		List<Map<String, String>> juguetes = parseFile(generarRutaArchivo(this.cedulaNiño));
 		
 		if (!juguetes.isEmpty()) {

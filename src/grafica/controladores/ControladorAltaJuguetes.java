@@ -25,7 +25,7 @@ public class ControladorAltaJuguetes {
 
 	public void AltaJuguete(int _cedula, String _descripcion) throws JuguetesException, Exception {
 		VOJuguete _voj;
-		_voj = new VOJuguete(_cedula, _descripcion, _cedula);
+		_voj = new VOJuguete(0, _descripcion, _cedula);
 		try {
 			cap.AltaJuguete(_voj);
 		} catch (JuguetesException je) {
