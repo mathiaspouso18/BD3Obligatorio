@@ -58,7 +58,7 @@ public class DAOJuguetesArchivo extends IDAOJuguetes {
 		} catch (IOException e) {
 			throw new PersistenciaException(3);
 		}
-		contenido.append(";numero=" + Integer.toString(juguete.getNumero()) + ",descripcion=" + juguete.getDescripcion());
+		contenido.append("numero=" + Integer.toString(juguete.getNumero()) + ",descripcion=" + juguete.getDescripcion()+";");
 		try (FileWriter escritura = new FileWriter(archivoModificar, false)) {
 			escritura.write(contenido.toString());
 		} catch (IOException e) {

@@ -135,7 +135,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				pool.liberarConexion(icon, false);
 				throw new JuguetesException(4);
 			}
-			descripcion = niño.obtenerJuguete(icon, _num).getDescripcion();
+			Juguete juguete = niño.obtenerJuguete(icon, _num);
+			descripcion = juguete.getDescripcion();
 		} catch (PersistenciaException e) {
 			pool.liberarConexion(icon, true);
 			throw e;
