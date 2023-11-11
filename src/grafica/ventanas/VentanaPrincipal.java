@@ -100,8 +100,8 @@ public class VentanaPrincipal extends JFrame {
 
 	public static void borrarJuguetes(String cedula) {
 		if (!cedula.equals("")) {
-			int c = Integer.valueOf(cedula);
 			try {
+				int c = Integer.valueOf(cedula);
 				ControladorBajaJuguetes.BajarJuguetes(c);
 				lblError.setForeground(Color.GREEN);
 				lblError.setVisible(true);
@@ -119,7 +119,11 @@ public class VentanaPrincipal extends JFrame {
 			} catch (JuguetesException je) {
 				lblErrorJuguete2.setForeground(Color.RED);
 				lblErrorJuguete2.setText(je.getMensajeJuguetesExcep());
-			} catch (RemoteException e) {
+			}catch(NumberFormatException nfe) {
+				lblErrorJuguete2.setText("La cédula ingresada no tiene el formato valido");
+				lblErrorJuguete2.setForeground(Color.RED); 
+			} 
+			catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -132,8 +136,8 @@ public class VentanaPrincipal extends JFrame {
 
 	public static void actualizarJuguetes(String cedula) {
 		if (!cedula.equals("")) {
-			int c = Integer.valueOf(cedula);
 			try {
+				int c = Integer.valueOf(cedula);
 				modelJuguetes.getDataVector().removeAllElements();
 				modelJuguetes.fireTableDataChanged();
 				ArrayList<String[]> datosJuguetes = new ArrayList<String[]>();
@@ -151,6 +155,9 @@ public class VentanaPrincipal extends JFrame {
 			} catch (PersistenciaException e1) {
 				lblErrorJuguete2.setForeground(Color.RED);
 				lblErrorJuguete2.setText(e1.getMensajePersistenciaExcep());
+			} catch(NumberFormatException nfe) {
+				lblErrorJuguete2.setText("La cédula ingresada no tiene el formato valido");
+				lblErrorJuguete2.setForeground(Color.RED); 
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -404,8 +411,8 @@ public class VentanaPrincipal extends JFrame {
 				String cedula = txtCedula3.getText();
 
 				if (!descripcion.equals("") && !cedula.equals("")) {
-					int _ced = Integer.valueOf(cedula);
 					try {
+						int _ced = Integer.valueOf(cedula);
 						caj.AltaJuguete(_ced, descripcion);
 						txtDescripcion.setText("");
 						lblErrorJuguete.setText("Juguete ingresado con éxito");
@@ -418,7 +425,11 @@ public class VentanaPrincipal extends JFrame {
 					} catch (NiñosException ne) {
 						lblErrorJuguete.setText(ne.getMensajeNiñosExcep());
 						lblErrorJuguete.setForeground(Color.RED);
-					} catch (Exception e1) {
+					} catch(NumberFormatException nfe) {
+						lblErrorJuguete.setText("La cédula ingresada no tiene el formato valido");
+						lblErrorJuguete.setForeground(Color.RED);
+					} 
+					catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -557,6 +568,9 @@ public class VentanaPrincipal extends JFrame {
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					} catch(NumberFormatException nfe) {
+						lblError.setText("La cédula ingresada no tiene el formato valido");
+						lblError.setForeground(Color.RED);
 					}
 				} else {
 					lblError.setText("Debe ingresar la cedula del niño");
@@ -581,8 +595,8 @@ public class VentanaPrincipal extends JFrame {
 				String cedula = txtCedula.getText();
 
 				if (!cedula.equals("") && !nombre.equals("") && !apellido.equals("")) {
-					int ced = Integer.valueOf(cedula);
 					try {
+						int ced = Integer.valueOf(cedula);
 						can.AltaNinio(ced, nombre, apellido);
 						txtCedula.setText("");
 						txtNombre.setText("");
@@ -601,6 +615,9 @@ public class VentanaPrincipal extends JFrame {
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					} catch(NumberFormatException nfe) {
+						lblError.setText("La cédula ingresada no tiene el formato valido");
+						lblError.setForeground(Color.RED);
 					}
 				} else {
 					lblError.setForeground(Color.RED);
