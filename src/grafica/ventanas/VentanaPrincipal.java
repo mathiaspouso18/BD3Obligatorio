@@ -1,6 +1,5 @@
 package grafica.ventanas;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -37,11 +36,10 @@ import javax.swing.ListSelectionModel;
 public class VentanaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private static JTextField txtCedula;
+	private JTextField txtCedula;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtDescripcion;
-	static VentanaPrincipal vista;
 	private JTable tblNinios;
 	static DefaultTableModel model;
 	private JTextField txtCedula2;
@@ -52,18 +50,18 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField txtCedula3;
 	private JTextField txtCedula4;
 
-	static ControladorAltaNinio can;
-	static ControladorAltaJuguetes caj;
-	static ControladorListadoNinios cln;
-	static ControladorListadoJuguetes clj;
-	static ControladorBuscarDescripcion cbj;
-	static ControladorBajaNinio cbn;
-	static ControladorBajaJuguetes ControladorBajaJuguetes;
+	private ControladorAltaNinio can;
+	private ControladorAltaJuguetes caj;
+	private ControladorListadoNinios cln;
+	private ControladorListadoJuguetes clj;
+	private ControladorBuscarDescripcion cbj;
+	private ControladorBajaNinio cbn;
+	private ControladorBajaJuguetes controladorBajaJuguetes;
 
-	static JLabel lblError;
-	static JLabel lblErrorJuguete;
-	static JLabel lblErrorJuguete2;
-	static JLabel lblErrorJuguete3;
+	private JLabel lblError;
+	private JLabel lblErrorJuguete;
+	private JLabel lblErrorJuguete2;
+	private JLabel lblErrorJuguete3;
 
 	/**
 	 * Launch the application.
@@ -71,38 +69,36 @@ public class VentanaPrincipal extends JFrame {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		can = new ControladorAltaNinio(vista);
-		caj = new ControladorAltaJuguetes(vista);
-		cln = new ControladorListadoNinios(vista);
-		clj = new ControladorListadoJuguetes(vista);
-		cbj = new ControladorBuscarDescripcion(vista);
-		cbn = new ControladorBajaNinio(vista);
-		ControladorBajaJuguetes = new ControladorBajaJuguetes(vista);
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaPrincipal frame = new VentanaPrincipal();
-					frame.setVisible(true);
-					actualizarNinios();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		new VentanaPrincipal().launchApplication();
+
+	}
+	
+
+	
+	private void launchApplication() throws Exception{
+		can = new ControladorAltaNinio(this);
+		caj = new ControladorAltaJuguetes(this);
+		cln = new ControladorListadoNinios(this);
+		clj = new ControladorListadoJuguetes(this);
+		cbj = new ControladorBuscarDescripcion(this);
+		cbn = new ControladorBajaNinio(this);
+		controladorBajaJuguetes = new ControladorBajaJuguetes(this);
+		setVisible(true);
+		actualizarNinios();
 	}
 
-	public static void limpiarErrores() {
+	public void limpiarErrores() {
 		lblError.setText("");
 		lblErrorJuguete.setText("");
 		lblErrorJuguete2.setText("");
 		lblErrorJuguete3.setText("");
 	}
 
-	public static void borrarJuguetes(String cedula) {
+	public void borrarJuguetes(String cedula) {
 		if (!cedula.equals("")) {
 			try {
 				int c = Integer.valueOf(cedula);
-				ControladorBajaJuguetes.BajarJuguetes(c);
+				controladorBajaJuguetes.BajarJuguetes(c);
 				lblError.setForeground(Color.GREEN);
 				lblError.setVisible(true);
 				txtCedula.setText("");
@@ -134,7 +130,7 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 
-	public static void actualizarJuguetes(String cedula) {
+	public void actualizarJuguetes(String cedula) {
 		if (!cedula.equals("")) {
 			try {
 				int c = Integer.valueOf(cedula);
@@ -169,7 +165,7 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 
-	public static void actualizarNinios() {
+	public void actualizarNinios() {
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		model.getDataVector().removeAllElements();
 		model.fireTableDataChanged();
