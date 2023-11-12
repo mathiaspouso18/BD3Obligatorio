@@ -1,6 +1,5 @@
 package grafica.ventanas;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -41,7 +40,6 @@ public class VentanaPrincipal extends JFrame {
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtDescripcion;
-	//static VentanaPrincipal vista;
 	private JTable tblNinios;
 	static DefaultTableModel model;
 	private JTextField txtCedula2;
