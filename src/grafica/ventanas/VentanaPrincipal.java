@@ -70,24 +70,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public static void main(String[] args) throws Exception {
 		new VentanaPrincipal().launchApplication();
-//		can = new ControladorAltaNinio(vista);
-//		caj = new ControladorAltaJuguetes(vista);
-//		cln = new ControladorListadoNinios(vista);
-//		clj = new ControladorListadoJuguetes(vista);
-//		cbj = new ControladorBuscarDescripcion(vista);
-//		cbn = new ControladorBajaNinio(vista);
-//		ControladorBajaJuguetes = new ControladorBajaJuguetes(vista);
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					VentanaPrincipal frame = new VentanaPrincipal();
-//					frame.setVisible(true);
-//					actualizarNinios();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
+
 	}
 	
 
@@ -102,17 +85,6 @@ public class VentanaPrincipal extends JFrame {
 		controladorBajaJuguetes = new ControladorBajaJuguetes(this);
 		setVisible(true);
 		actualizarNinios();
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					VentanaPrincipal frame = new VentanaPrincipal();
-//					frame.setVisible(true);
-//					actualizarNinios();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
 	}
 
 	public void limpiarErrores() {
