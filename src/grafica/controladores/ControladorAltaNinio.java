@@ -3,7 +3,6 @@ package grafica.controladores;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
-import config.ConfigManager;
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
 import logica.excepciones.NiñosException;
@@ -14,9 +13,7 @@ public class ControladorAltaNinio {
 	private IFachada cap;
 
 	public ControladorAltaNinio(VentanaPrincipal vp) throws Exception {
-		String ip = ConfigManager.getInstance().getProperty("ipServidor");
-		String puerto = ConfigManager.getInstance().getProperty("puertoServidor");
-		String ruta = "//" + ip + ":" + puerto + "/fachada";
+		String ruta = UtilControlador.obtenerRutaServidor();
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 

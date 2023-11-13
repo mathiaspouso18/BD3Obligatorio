@@ -1,13 +1,11 @@
 package grafica.controladores;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 import grafica.ventanas.VentanaPrincipal;
 import logica.IFachada;
@@ -19,13 +17,8 @@ import logica.valueObjects.VOJuguete;
 public class ControladorListadoJuguetes {
 	private IFachada cap;
 
-	public ControladorListadoJuguetes(VentanaPrincipal vp) throws JuguetesException, FileNotFoundException, IOException, NotBoundException {
-		Properties p = new Properties();
-		String nomArch = "src/config/config.properties";
-		p.load(new FileInputStream(nomArch));
-		String ip = p.getProperty("ipServidor");
-		String puerto = p.getProperty("puertoServidor");
-		String ruta = "//" + ip + ":" + puerto + "/fachada";
+	public ControladorListadoJuguetes(VentanaPrincipal vp) throws JuguetesException, FileNotFoundException, IOException, NotBoundException, Exception {
+		String ruta = UtilControlador.obtenerRutaServidor();
 		cap = (IFachada) Naming.lookup(ruta);
 	}
 
