@@ -13,6 +13,7 @@ import grafica.controladores.ControladorBajaJuguetes;
 import grafica.controladores.ControladorBuscarDescripcion;
 import grafica.controladores.ControladorListadoJuguetes;
 import grafica.controladores.ControladorListadoNinios;
+import grafica.ventanas.UtilVentana.CampoTextoNumerico;
 import logica.excepciones.JuguetesException;
 import logica.excepciones.NiñosException;
 import logica.excepciones.PersistenciaException;
@@ -255,7 +256,7 @@ public class VentanaPrincipal extends JFrame {
 		btnInsertarJuguete.setBounds(293, 21, 89, 23);
 		pnlAltaJuguete.add(btnInsertarJuguete);
 
-		txtCedula3 = new JTextField();
+		txtCedula3 = new CampoTextoNumerico();
 		txtCedula3.setColumns(10);
 		txtCedula3.setBounds(172, 22, 111, 20);
 		pnlAltaJuguete.add(txtCedula3);
@@ -292,7 +293,7 @@ public class VentanaPrincipal extends JFrame {
 		lblErrorJuguete2.setBounds(442, 123, 299, 14);
 		pnlListadoJuguetes.add(lblErrorJuguete2);
 
-		txtCedula4 = new JTextField();
+		txtCedula4 = new CampoTextoNumerico();
 		txtCedula4.setColumns(10);
 		txtCedula4.setBounds(491, 18, 86, 20);
 		pnlListadoJuguetes.add(txtCedula4);
@@ -322,7 +323,7 @@ public class VentanaPrincipal extends JFrame {
 		lblCedula2.setBounds(10, 31, 94, 14);
 		panel.add(lblCedula2);
 
-		txtCedula2 = new JTextField();
+		txtCedula2 = new CampoTextoNumerico();
 		txtCedula2.setBounds(174, 28, 111, 20);
 		panel.add(txtCedula2);
 		txtCedula2.setColumns(10);
@@ -331,7 +332,7 @@ public class VentanaPrincipal extends JFrame {
 		lblNumeroJuguete.setBounds(10, 59, 136, 14);
 		panel.add(lblNumeroJuguete);
 
-		txtNumeroJuguete = new JTextField();
+		txtNumeroJuguete = new CampoTextoNumerico();
 		txtNumeroJuguete.setColumns(10);
 		txtNumeroJuguete.setBounds(174, 56, 111, 20);
 		panel.add(txtNumeroJuguete);
@@ -405,30 +406,38 @@ public class VentanaPrincipal extends JFrame {
 				limpiarErrores();
 				String descripcion = txtDescripcion.getText();
 				String cedula = txtCedula3.getText();
+				
+				String regex = "^[a-zA-Z0-9 ]+$";
 
 				if (!descripcion.equals("") && !cedula.equals("")) {
-					try {
-						int _ced = Integer.valueOf(cedula);
-						caj.AltaJuguete(_ced, descripcion);
-						txtDescripcion.setText("");
-						lblErrorJuguete.setText("Juguete ingresado con éxito");
-						lblErrorJuguete.setForeground(Color.GREEN);
-						lblErrorJuguete.setVisible(true);
-						actualizarJuguetes(cedula);
-					} catch (JuguetesException je) {
-						lblErrorJuguete.setText(je.getMensajeJuguetesExcep());
-						lblErrorJuguete.setForeground(Color.RED);
-					} catch (NiñosException ne) {
-						lblErrorJuguete.setText(ne.getMensajeNiñosExcep());
-						lblErrorJuguete.setForeground(Color.RED);
-					} catch(NumberFormatException nfe) {
-						lblErrorJuguete.setText("La cédula ingresada no tiene el formato valido");
-						lblErrorJuguete.setForeground(Color.RED);
-					} 
-					catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					if (descripcion.matches(regex)) {
+						try {
+							int _ced = Integer.valueOf(cedula);
+							caj.AltaJuguete(_ced, descripcion);
+							txtDescripcion.setText("");
+							lblErrorJuguete.setText("Juguete ingresado con éxito");
+							lblErrorJuguete.setForeground(Color.GREEN);
+							lblErrorJuguete.setVisible(true);
+							actualizarJuguetes(cedula);
+						} catch (JuguetesException je) {
+							lblErrorJuguete.setText(je.getMensajeJuguetesExcep());
+							lblErrorJuguete.setForeground(Color.RED);
+						} catch (NiñosException ne) {
+							lblErrorJuguete.setText(ne.getMensajeNiñosExcep());
+							lblErrorJuguete.setForeground(Color.RED);
+						} catch(NumberFormatException nfe) {
+							lblErrorJuguete.setText("La cédula ingresada no tiene el formato valido");
+							lblErrorJuguete.setForeground(Color.RED);
+						} 
+						catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} else {
+		                lblErrorJuguete.setText("La descripción solo puede contener letras y números.");
+		                lblErrorJuguete.setForeground(Color.RED);
+		                lblErrorJuguete.setVisible(true);
+		            }
 
 				} else {
 					lblErrorJuguete3.setForeground(Color.RED);
@@ -473,7 +482,7 @@ public class VentanaPrincipal extends JFrame {
 		lblApellido.setBounds(10, 72, 60, 14);
 		pnlAltaNinio.add(lblApellido);
 
-		txtCedula = new JTextField();
+		txtCedula = new CampoTextoNumerico();
 		txtCedula.setBounds(80, 19, 86, 20);
 		pnlAltaNinio.add(txtCedula);
 		txtCedula.setColumns(10);
@@ -589,32 +598,39 @@ public class VentanaPrincipal extends JFrame {
 				String nombre = txtNombre.getText();
 				String apellido = txtApellido.getText();
 				String cedula = txtCedula.getText();
+				String regex = "^[a-zA-Z ]+$";
 
 				if (!cedula.equals("") && !nombre.equals("") && !apellido.equals("")) {
-					try {
-						int ced = Integer.valueOf(cedula);
-						can.AltaNinio(ced, nombre, apellido);
-						txtCedula.setText("");
-						txtNombre.setText("");
-						txtApellido.setText("");
-						lblError.setText("Niño ingresado con éxito");
-						lblError.setForeground(Color.GREEN);
+					if (nombre.matches(regex) && apellido.matches(regex)) {
+						try {
+							int ced = Integer.valueOf(cedula);
+							can.AltaNinio(ced, nombre, apellido);
+							txtCedula.setText("");
+							txtNombre.setText("");
+							txtApellido.setText("");
+							lblError.setText("Niño ingresado con éxito");
+							lblError.setForeground(Color.GREEN);
+							lblError.setVisible(true);
+							actualizarNinios();
+						} catch (NiñosException ne) {
+							lblError.setText(ne.getMensajeNiñosExcep());
+							lblError.setForeground(Color.RED);
+	
+						} catch (PersistenciaException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch(NumberFormatException nfe) {
+							lblError.setText("La cédula ingresada no tiene el formato valido");
+							lblError.setForeground(Color.RED);
+						}
+					} else {
+						lblError.setText("Nombre y apellido solo pueden conener letras");
+						lblError.setForeground(Color.RED);
 						lblError.setVisible(true);
-						actualizarNinios();
-					} catch (NiñosException ne) {
-						lblError.setText(ne.getMensajeNiñosExcep());
-						lblError.setForeground(Color.RED);
-
-					} catch (PersistenciaException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch(NumberFormatException nfe) {
-						lblError.setText("La cédula ingresada no tiene el formato valido");
-						lblError.setForeground(Color.RED);
-					}
+		            }
 				} else {
 					lblError.setForeground(Color.RED);
 					lblError.setText("Los campos no pueden estar vacios");
@@ -625,3 +641,4 @@ public class VentanaPrincipal extends JFrame {
 		});
 	}
 }
+
